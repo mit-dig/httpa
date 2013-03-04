@@ -1,0 +1,7 @@
+#!/bin/bash
+
+/home/bamboo/bin/run-java bamboo.lss.DustDevil /home/httpa/httpa-bamboo/configs/3630.cfg &
+/home/bamboo/bin/run-java bamboo.lss.DustDevil /home/httpa/httpa-bamboo/configs/3633.cfg &
+/home/bamboo/bin/run-java bamboo.lss.DustDevil /home/httpa/httpa-bamboo/configs/3636.cfg &
+/home/bamboo/bin/run-java bamboo.lss.DustDevil /home/httpa/httpa-bamboo/configs/3639.cfg &
+
