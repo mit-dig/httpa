@@ -1,32 +1,50 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>HTTPA PUT DEMO</title>
-  </head>
+{% extends "base.html" %}
 
-  <body>
-    <!-- List of uploaded documents -->
-    {% if documents %}
-        <ul>
-	  {% for document in documents %}
-	     <li><a href="{{ document.docfile.url}}">{{ document.docfile.name}}</a></li>
-	  {% endfor %}
-	</ul>
-    {% else %}
-	<p> No documents. </p>
-    {% endif %}
+{% block content %}
+
+<h3>File Upload/Download Demo</h3>
 
     <!-- Upload form. Note enctype attribute -->
     <form action="{% url list %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <p>{{ form.non_field_errors }}</p>
-      <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
-      <p>
+      <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}
+      
 	{{ form.docfile.errors }}
 	{{ form.docfile }}
       </p>
+      <p>Usage Restrictions: </p>
+      <p>	
+	<input type="radio" name="ur" value="http://creativecommons.org/licenses/by/3.0/">Must Attribute</input><br/>
+	<input type="radio" name="ur" value="http://creativecommons.org/licenses/by-nc/3.0/">Must not be used for commercial use</input><br/>
+	<input type="radio" name="ur" value="http://creativecommons.org/licenses/by-sa/3.0/">Must be shared under the same usage restrictions</input><br/>
+	<input type="radio" name="ur" value="http://creativecommons.org/licenses/by-nd/3.0/">Must not make any derivates from this</input><br/>
+	<input type="radio" name="ur" value="http://creativecommons.org/licenses/by-nc-sa/3.0/"></input>Must not be used for commercial use and must be shared under the same usage restrictions<br/>
+	<input type="radio" name="ur" value="http://creativecommons.org/licenses/by-nc-nd/3.0/"></input>Must not be used for commercial uses and must not make any derivatives from this<br/>
+      </p>
+      <p>Sources: <input name="sources" onfocus="if (this.value=='Source(s) this is derived from') this.value=''" type="text" value="Source(s) this is derived from" size="100"></p>
+      
       <p><input type="submit" value="Upload"/></p>
    </form>
-  </body>
-</html>
+
+<h3>Uploaded Documents</h3>
+
+    <!-- List of uploaded documents -->
+    {% if documents %}
+
+	  <table border="1">
+          <thead><tr><th>Resource</th><th>Usage Restrictions</th><th>Owner</th><th>Source(s)</th></tr></thead>
+          <tbody>											  
+	  {% for document in documents %}
+	     <tr> <td><a href="{{ document.docfile.url}}">{{ document.docfile.name}}</a></td> 
+	          <td><a href="{{ document.ur }}">{{ document.ur }}</a></td>
+		  <td>{{ user }}</td>
+		  <td>{{ document.sources }} </td>
+	  {% endfor %}
+          </tbody>
+	  </table>
+    {% else %}
+	<p> No documents. </p>
+    {% endif %}
+
+{% endblock %}

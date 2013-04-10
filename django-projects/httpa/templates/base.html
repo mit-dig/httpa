@@ -2,9 +2,49 @@
 <html lang="en">
 <head>
     <title>{% block title %}{% endblock %}</title>
+<style>
+    body {
+       font-family: arial;
+       margin-left: 50px;
+       margin-right: 50px;
+       margin-top: 50px;
+       margin-bottom: 50px;
+     
+    }
+    h1 {    
+        background-color:#CCC;
+        border: 2px solid;
+        color:#39F;
+        text-align: center;
+    }
+    h3 {    
+        background-color:#CCC;
+        border: 1px solid;
+       
+        text-align: left;
+    }
+
+    table {
+        border: 1px solid;
+
+    }
+    thead{
+       margin-top:10px;       
+       margin-bottom:10px;
+
+    }
+
+    td {
+        text-align: left;
+        padding: 10px 10px 10px 10px;
+    }
+    p {
+   
+    }
+    </style>
 </head>
 <body>
-   <p><div id="heading">HTTPA DEMO</div></p>
+   <h1>HTTPA Demo</h1>
 
     {% block content %}{% endblock %}
     {% block footer %}
