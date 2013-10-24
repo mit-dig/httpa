@@ -1,0 +1,93 @@
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+mixin medical-conditions(title, buttonid)
+                    h3.subheading #{title}
+                    h5.subheading Select all that apply
+                    hr
+                    fieldset
+                            .control-group.span12
+                                #medical-conditions.controls.span4
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Acne")
+                                        | Acne
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Migraines")
+                                        | Migraines
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Pink Eye")
+                                        | Pink Eye
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Back Pain")
+                                        | Back Pain
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]", value="Rheumatoid Arthritis")
+                                        | Rheumatoid Arthritis
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]", value="Sinus Infection")
+                                        | Sinus Infection
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="HIV AIDS")
+                                        | HIV AIDS
+                                #medical-conditions.controls.span3
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Cholesterol")
+                                        | Cholesterol
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Heartburn")
+                                        | Heartburn
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Hypertension")
+                                        | Hypertension
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]", value="Panic Attacks")
+                                        | Panic Attacks
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Tuberculosis")
+                                        | Tuberculosis
+                                    label.checkbox
+                                        input(type="checkbox",name="illnesses[]",value="Herpes")
+                                        | Herpes
+                            button(id=buttonid).btn.btn-primary.pull-right Next
+
+
+                    
+#profile-form-container
+        form(method="post",action="/profile")#profile-form.form-horizontal.well
+                #personal
+                    h3#sub1.subheading Personal Information
+                    fieldset
+                            input(type='hidden', value= user._id)#userId
+                            #birthdate-cg.control-group
+                                    label.control-label(for='bithdate-tf') Birthdate
+                                    .controls
+                                            input#birthdate-tf.input-xlarge(type='text', name='birthdate', value= user.birthdate)
+                            #bloodtype-cg.control-group
+                                    label.control-label(for='bloodtype-tf') Blood Type
+                                    .controls
+                                            input#bloodtype-tf.input-xlarge(type='text', name='bloodtype', value= user.bloodtype)
+                            #emergency-cg.control-group
+                                    label.control-label(for='emergency-tf') Emergency Contact
+                                    .controls
+                                            input#emergency-tf.input-xlarge(type='text', name='emergency', value= user.emergency)
+                            #pcp-cg.control-group
+                                    label.control-label(for='pcp-tf') Primary Care Provider
+                                    .controls
+                                            input#pcp-tf.input-xlarge(type='text', name='pcp', value= user.pcp)
+                            button#personal-profile-form-update-btn.btn.btn-primary.pull-right Next
+                            
+                #past-medical-conditions(style="display:none")
+                        +medical-conditions('Medical Conditions', 'past-medical-conditions-btn')
+
+                #past-medications(style="display:none")
+
+                #form-submit(style="display:none")        
+                        .form-actions
+                                button(type='submit').btn.btn-primary Submit
+
+// display form errors in a custom modal window //
+
+include modals/form-errors
+

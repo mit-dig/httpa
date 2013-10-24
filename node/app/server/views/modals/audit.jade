@@ -1,0 +1,25 @@
+mixin auditlog(date, agent, role, purpose)
+        h4 Date: #{date}
+        b Agent: 
+        | #{agent}
+        br
+        b Role: 
+        | #{role}
+        br
+        b Purpose: 
+        | #{purpose}
+        br
+        button.btn.btn-info Questions?
+        hr
+
+.modal-audit.modal.hide.fade
+    div.modal-header
+        button.close(data-dismiss='modal') x
+        h3
+    div.modal-body
+        +auditlog('12 Sep 2013', 'Doctor Dee', 'Physician', 'Preparation for a follow up visit')
+        +auditlog('23 Sep 2013', 'Steven Special', 'Physician', 'Referral Visit')
+        +auditlog('23 Sep 2013', 'Precilla Philip', 'Pharmacist', 'Check Prescription History')
+        +auditlog('24 Sep 2013', 'Ira Indigo', 'Insuarance-representative', 'Health Insurance Claim')
+    div.modal-footer
+        button(data-dismiss="modal")#ok.btn.btn-warning OK

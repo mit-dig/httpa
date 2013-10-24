@@ -1,0 +1,65 @@
+extends layout
+
+// preset form values if we receive a userdata object //
+- user = typeof(udata) != 'undefined' ? udata : { }
+// store the userId on the client side in a hidden input field //
+input(type='hidden', value= user._id)#userId
+
+mixin regularfield(label, idtype, style, val, audit)
+                    - var auditbuttondisplay = (audit === true ? '' : 'none')
+                    .control-group
+                        label.control-label #{label}:
+                        .controls
+                            input(name=label,type="text",style=style,value=val,disabled).readOnly
+                            span.help-inline 
+                            button(id=idtype,style='display:'+auditbuttondisplay).btn.btn-mini.btn-primary Audit
+
+mixin complexfield(label, idtype, style, val, audit)
+        .complexfield
+            b #{label}s
+            hr
+            each i,v in val
+                +regularfield(label, idtype, style, v, audit)
+
+
+        
+block content
+    +loggedin_navbar
+
+
+    .row-fluid
+        form.form-horizontal.span8
+            fieldset
+                - legendgreeting = user.name + "'s Medical Details"
+
+                legend=legendgreeting
+                br
+                .row
+                #auditfields.span12
+                    +regularfield('URI', 'uriaudit','width:100%', uri, false)
+                    +regularfield('Country', 'countryaudit','', user.country, true)
+                    +regularfield('Date Joined', 'dateaudit', '', user.date, true)
+                    +regularfield('Birthdate', 'birthdateaudit','', user.birthdate, true)
+                    +regularfield('Blood Type', 'bloodtypeaudit','', user.bloodtype, true)
+                    +regularfield('Emergency Contact', 'emergencyaudit','', user.emergency, true)
+                    +regularfield('Primary Care Provider', 'pcpaudit','', user.pcp, true)
+                    +complexfield('Medical Condition', 'conditionsaudit','', user.illnesses, true)
+                    +complexfield('Medication', 'medicationsaudit','', user.medications, true)
+
+        .row-fluid.status-bar
+            .span
+                .alert.alert-success(style="display:none")
+                    | <b>Success!</b> Data saved successfully.
+
+    include modals/audit
+    include modals/alert
+    include modals/confirm
+
+block scripts
+    script(src='/vendor/jquery.min.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/js/views/home.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/accountValidator.js')

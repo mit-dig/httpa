@@ -1,0 +1,32 @@
+
+extends layout
+
+
+block content
+    +loggedin_navbar
+
+    // preset form values if we receive a userdata object //
+    - user = typeof(udata) != 'undefined' ? udata : { }
+    // store the userId on the client side in a hidden input field //
+    input(type='hidden', value= user._id)#userId
+    - var url = '/patient/' + user._id
+
+    .row(style="margin:auto")
+        .span4
+            a(href=url,style="text-align:center").thumbnail.plain
+                img(src="img/generic.jpg",height="150",width="125")
+                h5= user.name
+                i.icon-globe
+                = user.country
+        
+    include modals/alert
+    include modals/confirm
+
+block scripts
+    script(src='/vendor/jquery.min.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/js/views/home.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/accountValidator.js')

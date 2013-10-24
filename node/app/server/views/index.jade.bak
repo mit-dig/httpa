@@ -1,0 +1,26 @@
+
+extends layout
+
+block content
+    +navbar
+    .home-hero
+        h1 Welcome to Transparent Health
+        h2 Sample application to demo Provenance Trackers in HTTPA
+        div(style="opacity: .9")
+            a.btn.btn-large(href="/login")
+                img.pull-left(style='margin-right:6px',src='img/health.png')
+                | Transparent Health
+            a.btn.btn-large(href='/study')
+                img.pull-left(style='margin-right:6px',src='img/user.png')
+                | Take User Study
+
+
+block scripts
+    script(src='/vendor/jquery.min.js')
+    script(src='/vendor/jquery.form.js')
+    script(src='/vendor/bootstrap-modal.js')
+    script(src='/vendor/bootstrap-transition.js')
+    script(src='/vendor/bootstrap-collapse.js')
+    script(src='/js/views/home.js')
+    script(src='/js/controllers/homeController.js')
+    script(src='/js/form-validators/accountValidator.js')

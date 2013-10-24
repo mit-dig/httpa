@@ -1,0 +1,71 @@
+!!! 5
+
+mixin navbar
+    .navbar.navbar-inverse.navbar-fixed-top(style="z-index: 10;")
+        .navbar-inner
+            .container
+                a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.brand(href='/') Transparent Health
+                .nav-collapse.collapse
+                    ul.nav.pull-right
+                        li.add-menu
+                            a(href="/login")
+
+mixin loggedin_navbar
+    .navbar.navbar-inverse.navbar-fixed-top(style="z-index: 10;")
+        .navbar-inner
+            .container
+                a.btn.btn-navbar(data-toggle="collapse",data-target=".nav-collapse")
+                    span.icon-bar
+                    span.icon-bar
+                    span.icon-bar
+                a.brand(href='/') Transparent Health
+                .nav-collapse.collapse
+                    ul.nav
+                        li.add-menu
+                            a(href='/profile') Create Health Profile
+                        li.add-menu
+                            a(href='/settings') Account Settings
+                    ul.nav.pull-right
+                        li.add-menu
+                            button#btn-logout.btn.btn-primary Logout
+                            
+html
+    head
+        title Transparent Health
+        meta(name='viewport', content='width=device-width,initial-scale=1.0')
+        link(rel='stylesheet', href='/vendor/bootstrap.min.css')
+        link(rel='stylesheet', href='/vendor/bootstrap-responsive.min.css')
+        link(rel='stylesheet', href='/css/style.css')
+        link(rel='stylesheet', href='/css/banner-style.css')
+        script(src='http://use.edgefonts.net/andika.js')
+        script(src='http://use.edgefonts.net/arvo.js')
+        script(type='text/javascript')
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-1890531-10']);
+            _gaq.push(['_setDomainName', 'braitsch.io']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+    body
+        .header
+        .container
+            .row-fluid
+                #content.span12
+                
+                    block content
+                    
+        footer.footer
+            p.pull-right
+                a(href="/") Back Home
+            p 
+                | Built as a sample application for 
+                a(href='http://httpa.csail.mit.edu') HTTPA.
+                
+        block scripts
