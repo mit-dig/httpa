@@ -1,0 +1,41 @@
+{
+   "background": {
+      "page": "background.html",
+      "persistent": false
+   },
+   "commands": {
+      "download_images": {
+         "description": "Remix and Share Images on the current page",
+         "suggested_key": {
+            "default": "Ctrl+Shift+S",
+            "mac": "Command+Shift+S"
+         }
+      },
+      "slideshow_images": {
+         "description": "Start slideshow for images on the current page",
+         "suggested_key": {
+            "default": "Ctrl+Shift+P",
+            "mac": "Command+Shift+P"
+         }
+      }
+   },
+   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+   "default_locale": "en",
+   "description": "__MSG_extDescription__",
+   "icons": {
+      "128": "icon128.png",
+      "48": "icon48.png"
+   },
+   "manifest_version": 2,
+   "name": "HTTPA PhotoRM",
+   "optional_permissions": [ "notifications", "downloads" ],
+   "options_page": "options.html",
+   "page_action": {
+      "default_icon": "icon19.png",
+      "default_popup": "popup.html"
+   },
+   "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus", "bookmarks" ],
+   "short_name": "Ice",
+   "version": "7.0.1",
+   "web_accessible_resources": [ "options.html" ]
+}

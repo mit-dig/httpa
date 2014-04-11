@@ -1,0 +1,25 @@
+body {
+    width: 250px;
+    height: 85px;
+    font-family: "Verdana","Arial",sans-serif;
+    background-color: skyblue;
+}
+
+div.message {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+div.description {
+    font-size: 10px;
+    margin-left: 10px;
+}
+
+div.copyright {
+    position: absolute;
+    right: 5px;
+    bottom: 8px;
+    color: gray;
+    font-size: 10px;
+}

@@ -1,0 +1,19 @@
+body {
+    background-color: black;
+    margin-top: 0;
+}
+
+.header {
+    height: 30px;
+    margin: 3px;
+    font-size: 13px;
+    font-family: 'serif'
+}
+
+.header table {
+    width: 100%;
+}
+
+.header table .header-right {
+    text-align: right;
+}

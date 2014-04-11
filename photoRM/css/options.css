@@ -1,0 +1,69 @@
+body {
+    font-family: "Verdana","Arial",sans-serif;
+    font-size: 16px;
+}
+
+div.title_pane {
+    margin-bottom: 20px;
+}
+
+div.title_pane img {
+    float: left;
+}
+
+div.title_pane div.title {
+    margin-top: 15px;
+    margin-left: 10px;
+    font-size: 24px;
+    font-family: "cursive",cursive;
+    float: left;
+}
+
+div.title_pane div#optWelcome {
+    margin-top: 5px;
+    font-size: 12px;
+    width: 700px;
+    color: gray;
+}
+
+div.section_pane {
+    margin-bottom: 30px;
+}
+
+div.section_title {
+    width: 100%;
+    border-top: 1px solid #36C;
+    background-color: #E5ECF9;
+    font-weight: bold;
+    padding: 1px 2px;
+}
+
+table {
+    width: 100%;
+    border: 0;
+}
+
+td {
+    font-size: 14px;
+    border-bottom: 1px solid #E5ECF9;
+    white-space: nowrap;
+}
+
+td.icon {
+    width: 20px;
+}
+
+td.checkbox_col {
+    width: 25px;
+}
+
+div.description {
+    color: gray;
+    font-size: 11px;
+    margin-left: 10px;
+    font-style: italic;
+}
+
+td.icon_col {
+    width: 20px;
+}

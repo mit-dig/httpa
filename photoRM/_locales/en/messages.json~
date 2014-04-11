@@ -1,0 +1,221 @@
+{
+    "extDescription": {
+        "message": "This extension provides you to retrieve images on the page you're seeing now quickly. Images cannot only be downloaded to your PC directly, but they also can be uploaded to Dropbox, Google Drive and SkyDrive directly and quickly."
+    },
+    "optCommand": {
+        "message": "Command"
+    },
+    "optCommandTemplate": {
+        "message": "Template"
+    },
+    "optCommandTemplateDescription": {
+        "message": "(You can embed the URL of each image by using the $url.)"
+    },
+    "optCommandTemplateSave": {
+        "message": "Download"
+    },
+    "optCommandTemplateSaveSucceed": {
+        "message": "Succeeded."
+    },
+    "optFilter": {
+        "message": "Filter"
+    },
+    "optFilterExts": {
+        "message": "Extensions"
+    },
+    "optFilterExtsDescription": {
+        "message": "(Please specify the file extension of the image you want to target separated by a space.)"
+    },
+    "optFilterExtsSave": {
+        "message": "Save"
+    },
+    "optFilterExtsSaveSucceed": {
+        "message": "Succeeded."
+    },
+    "optFilterExcepts": {
+        "message": "Excepted patterns"
+    },
+    "optFilterExceptsDescription": {
+        "message": "(Please specify the keywords separated by spaces in the URL you want to exclude.)"
+    },
+    "optFilterExceptsSave": {
+        "message": "Save"
+    },
+    "optFilterExceptsSaveSucceed": {
+        "message": "Succeeded."
+    },
+    "optFilterSize": {
+        "message": "Size"
+    },
+    "optFilterSizeDescription": {
+        "message": "(Please specify the minimum size of the image you want to target.)"
+    },
+    "optFilterSizeWidth": {
+        "message": "Width"
+    },
+    "optFilterSizeHeight": {
+        "message": "Height"
+    },
+    "optFilterSizeSave": {
+        "message": "Save"
+    },
+    "optFilterSizeSaveSucceed": {
+        "message": "Succeeded."
+    },
+    "optFilterPriorityLinkHref": {
+        "message": "If the img tag had been surrounded by a tag, the href attribute value of a tag is adopted."
+    },
+    "optFilterPriorityLinkHrefDescription": {
+        "message": "(The thumbnai image can be excluded, if checked.)"
+    },
+    "optDownload": {
+        "message": "Download"
+    },
+    "optDownloadFilename": {
+        "message": "Script file name"
+    },
+    "optDownloadFilenameSave": {
+        "message": "Save"
+    },
+    "optDownloadFilenameSucceed": {
+        "message": "Succeeded."
+    },
+    "optDownloadFilenameDescription": {
+        "message": "(You can embed the tab name into the file name using $tabname)"
+    },
+    "optServices": {
+        "message": "Services"
+    },
+    "optDropboxAuthorized": {
+        "message": "Authorized."
+    },
+    "optDropboxUnauthorized": {
+        "message": "Unauthorized."
+    },
+    "optAuthDropbox": {
+        "message": "Connect"
+    },
+    "optCancelDropbox": {
+        "message": "Disconnect"
+    },
+    "optGDriveAuthorized": {
+        "message": "Authorized."
+    },
+    "optGDriveUnauthorized": {
+        "message": "Unauthorized."
+    },
+    "optAuthGDrive": {
+        "message": "Connect"
+    },
+    "optCancelGDrive": {
+        "message": "Disconnect"
+    },
+    "optSDriveAuthorized": {
+        "message": "Authorized."
+    },
+    "optSDriveUnauthorized": {
+        "message": "Unauthorized."
+    },
+    "optAuthSDrive": {
+        "message": "Connect"
+    },
+    "optCancelSDrive": {
+        "message": "Disconnect"
+    },
+    "optWithoutCreatingFolder": {
+        "message": "Not creating a directory of each Web page."
+    },
+    "optWithoutCreatingFolderDescription": {
+        "message": "If checked, the directory of each Web page will not be created, and images will be put into the root directory."
+    },
+    "optStat": {
+        "message": "Statistics information"
+    },
+    "optStatRemainingJob": {
+        "message": "Remaining job count"
+    },
+    "optStatPageCount": {
+        "message": "All page count"
+    },
+    "optStatImageCount": {
+        "message": "All image count"
+    },
+    "optPreview": {
+        "message": "Hot preview"
+    },
+    "optPreviewLocation": {
+        "message": "Display position"
+    },
+    "optPreviewNone": {
+        "message": "None"
+    },
+    "optPreviewTopLeft": {
+        "message": "Top left"
+    },
+    "optPreviewTopRight": {
+        "message": "Top right"
+    },
+    "optPreviewBottomLeft": {
+        "message": "Bottom left"
+    },
+    "optPreviewBottomRight": {
+        "message": "Bottom right"
+    },
+    "popupCopied": {
+        "message": "The script was copied to the clipboard."
+    },
+    "popupBtnCopy": {
+        "message": "Copy"
+    },
+    "popupBtnSave": {
+        "message": "Download"
+    },
+    "popupSavedFile": {
+        "message": "Saved to download folder."
+    },
+    "popupSavedToDropbox": {
+        "message": "Registered the reservation task."
+    },
+    "popupSavedToDropboxFail": {
+        "message": "The reservation of the registeration task failed."
+    },
+    "popupImageCount": {
+        "message": "Image count:"
+    },
+    "popupBtnDropbox": {
+        "message": "Upload images"
+    },
+    "popupBtnAuthDropbox": {
+        "message": "Connect to Dropbox"
+    },
+    "popupBtnGdrive": {
+        "message": "Upload images"
+    },
+    "popupBtnAuthGdrive": {
+        "message": "Connect to Google Drive"
+    },
+    "popupSavedToGdrive": {
+        "message": "Registered the reservation task."
+    },
+    "popupSavedToGdriveFail": {
+        "message": "The reservation of the registeration task failed."
+    },
+    "popupBtnSdrive": {
+        "message": "Upload images"
+    },
+    "popupBtnAuthSdrive": {
+        "message": "Connect to SkyDrive"
+    },
+    "popupSavedToSdrive": {
+        "message": "Registered the reservation task."
+    },
+    "popupSavedToSdriveFail": {
+        "message": "The reservation of the registeration task failed."
+    },
+    "popupGoToPageTop": {
+        "message": "Go to page top"
+    },
+    "menuReloadImages": {
+        "message": "Reload images"
+    }
+}

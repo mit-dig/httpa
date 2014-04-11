@@ -1,0 +1,169 @@
+body {
+    width: 500px;
+    height: 410px;
+    font-family: "Verdana","Arial",sans-serif;
+    font-size: 14px;
+    background-color: skyblue;
+}
+
+div.left_pane {
+    float: left;
+}
+
+div.right_pane {
+    float: left;
+}
+
+div.pane_header div {
+    margin-bottom: 3px;
+    margin-left: 3px;
+    float: left;
+}
+
+table {
+    width: 100%;
+}
+
+div.pane_header img {
+    float: left;
+}
+
+td.image_table {
+    background-color: white;
+    width: 300px;
+}
+
+div.image_pane {
+    position: relative;
+    width: 300px;
+}
+
+#images {
+    width: 100%;
+    height: 290px;
+    margin-bottom: 5px;
+    overflow: auto;
+}
+
+#images img.content {
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 260px;
+}
+
+#message {
+    position: absolute;
+    color: green;
+    bottom: 3px;
+    left: 5px;
+    font-size: 11px;
+}
+
+div.copyright {
+    position: absolute;
+    right: 5px;
+    bottom: 8px;
+    color: gray;
+    font-size: 10px;
+}
+
+div.function_pane {
+    font-size: 12px;
+    margin-left: 30px;
+}
+
+div.info_pane {
+    font-size: 12px;
+    height: 20px;
+}
+
+div.info_pane div {
+    float: left;
+}
+
+div.info_pane img {
+    float: right;
+    cursor: pointer;
+}
+
+td.function_table {
+    background-color: white;
+}
+
+div.service_pane {
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+div.image_function {
+    width: 260px;
+    font-size: 11px;
+    height: 20px;
+}
+
+div.image_function_top {
+    margin-top: 2px;
+}
+
+div.image_function div.label {
+    margin-top: 3px;
+    padding-left: 5px;
+    font-size: 11px;
+    float: left;
+}
+
+div.image_function img {
+    cursor: pointer;
+    margin-left: 3px;
+    float: right;
+}
+
+div.image_function img.delete {
+    float: left;
+    margin-left: 8px;
+}
+
+div.image_function img.goto {
+    float: left;
+    margin-left: 8px;
+}
+
+div#ad_pane {
+    position: absolute;
+    left: 13px;
+    bottom: 25px;
+    width: 490px;
+    height: 60px;
+    override: hidden;
+    text-align: center;
+}
+
+div#ad_pane iframe {
+    width: 468px;
+    height: 100%;
+    border: 0px;
+}
+
+#btnDropbox {
+    display: none;
+}
+
+#btnAuthDropbox {
+    display: none;
+}
+
+#btnGdrive {
+    display: none;
+}
+
+#btnAuthGdrive {
+    display: none;
+}
+
+#btnSdrive {
+    display: none;
+}
+
+#btnAuthSdrive {
+    display: none;
+}

@@ -1,0 +1,286 @@
+{
+   "extDescription": {
+      "message": "This extension provides you to download images on the page you visit quickly to your PC, Dropbox, Google Drive, Picasa and SkyDrive."
+   },
+   "menuReloadImages": {
+      "message": "Reload images"
+   },
+   "notifyShortcutDownloadServiceBody": {
+      "message": "Images will go into $VALUE$",
+      "placeholders": {
+         "value": {
+            "content": "$1"
+         }
+      }
+   },
+   "notifyShortcutDownloadServiceTitle": {
+      "message": "Registration completed"
+   },
+   "optAuthDropbox": {
+      "message": "Connect"
+   },
+   "optAuthGDrive": {
+      "message": "Connect"
+   },
+   "optAuthPicasa": {
+      "message": "Connect"
+   },
+   "optAuthSDrive": {
+      "message": "Connect"
+   },
+   "optBookmark": {
+      "message": "Bookmark"
+   },
+   "optCancelDropbox": {
+      "message": "Disconnect"
+   },
+   "optCancelGDrive": {
+      "message": "Disconnect"
+   },
+   "optCancelPicasa": {
+      "message": "Disconnect"
+   },
+   "optCancelSDrive": {
+      "message": "Disconnect"
+   },
+   "optCommand": {
+      "message": "Command"
+   },
+   "optCommandTemplate": {
+      "message": "Template"
+   },
+   "optCommandTemplateDescription": {
+      "message": "(You can embed the URL of each image by using the $url.)"
+   },
+   "optCommandTemplateSave": {
+      "message": "Download"
+   },
+   "optCommandTemplateSaveSucceed": {
+      "message": "Succeeded."
+   },
+   "optDontCreatePageBookmark": {
+      "message": "Don't create a bookmark of the Web page, when the images saved."
+   },
+   "optDontHoverZoom": {
+      "message": "Don't zoom the image, when you place your mouse cursor over the image while pressing down the Shift key."
+   },
+   "optDownload": {
+      "message": "Download"
+   },
+   "optDownloadFilename": {
+      "message": "Script file name"
+   },
+   "optDownloadFilenameDescription": {
+      "message": "(You can embed the tab name into the file name using $tabname)"
+   },
+   "optDownloadFilenameSave": {
+      "message": "Save"
+   },
+   "optDownloadFilenameSucceed": {
+      "message": "Succeeded."
+   },
+   "optDropboxAuthorized": {
+      "message": "Authorized."
+   },
+   "optDropboxUnauthorized": {
+      "message": "Unauthorized."
+   },
+   "optFilter": {
+      "message": "Filter"
+   },
+   "optFilterExcepts": {
+      "message": "Excepted patterns"
+   },
+   "optFilterExceptsDescription": {
+      "message": "(Please specify the keywords separated by spaces in the URL you want to exclude.)"
+   },
+   "optFilterExceptsSave": {
+      "message": "Save"
+   },
+   "optFilterExceptsSaveSucceed": {
+      "message": "Succeeded."
+   },
+   "optFilterExts": {
+      "message": "Extensions"
+   },
+   "optFilterExtsDescription": {
+      "message": "(Please specify the file extension of the image you want to target separated by a space.)"
+   },
+   "optFilterExtsSave": {
+      "message": "Save"
+   },
+   "optFilterExtsSaveSucceed": {
+      "message": "Succeeded."
+   },
+   "optFilterPriorityLinkHref": {
+      "message": "If the img tag had been surrounded by a tag, the href attribute value of a tag is adopted."
+   },
+   "optFilterPriorityLinkHrefDescription": {
+      "message": "(The thumbnai image can be excluded, if checked.)"
+   },
+   "optFilterSize": {
+      "message": "Size"
+   },
+   "optFilterSizeDescription": {
+      "message": "(Please specify the minimum size of the image you want to target.)"
+   },
+   "optFilterSizeHeight": {
+      "message": "Height"
+   },
+   "optFilterSizeSave": {
+      "message": "Save"
+   },
+   "optFilterSizeSaveSucceed": {
+      "message": "Succeeded."
+   },
+   "optFilterSizeWidth": {
+      "message": "Width"
+   },
+   "optGDriveAuthorized": {
+      "message": "Authorized."
+   },
+   "optGDriveUnauthorized": {
+      "message": "Unauthorized."
+   },
+   "optHoverZoom": {
+      "message": "Hover zoom"
+   },
+   "optPicasaAuthorized": {
+      "message": "Authorized."
+   },
+   "optPicasaUnauthorized": {
+      "message": "Unauthorized."
+   },
+   "optPreview": {
+      "message": "Hot preview"
+   },
+   "optPreviewBottomLeft": {
+      "message": "Bottom left"
+   },
+   "optPreviewBottomRight": {
+      "message": "Bottom right"
+   },
+   "optPreviewLocation": {
+      "message": "Display position"
+   },
+   "optPreviewNone": {
+      "message": "None"
+   },
+   "optPreviewTopLeft": {
+      "message": "Top left"
+   },
+   "optPreviewTopRight": {
+      "message": "Top right"
+   },
+   "optSDriveAuthorized": {
+      "message": "Authorized."
+   },
+   "optSDriveUnauthorized": {
+      "message": "Unauthorized."
+   },
+   "optServices": {
+      "message": "Services"
+   },
+   "optShortcut": {
+      "message": "Shortcut"
+   },
+   "optShortcutDownloadDescription": {
+      "message": "(mac: Command+Shift+S, other: Ctrl+Shift+S)"
+   },
+   "optShortcutDownloadService1": {
+      "message": "Download images into"
+   },
+   "optShortcutDownloadService2": {
+      "message": "at pressing the key bind."
+   },
+   "optStat": {
+      "message": "Statistics information"
+   },
+   "optStatImageCount": {
+      "message": "All image count"
+   },
+   "optStatPageCount": {
+      "message": "All page count"
+   },
+   "optStatRemainingJob": {
+      "message": "Remaining job count"
+   },
+   "optWelcome": {
+      "message": "Thank you for installing this extension. You can adjust some configurations to fetch images on a Web page you visit. The button to download will be shown on the address bar, when there are images which match your condition in the Web page."
+   },
+   "optWithoutCreatingFolder": {
+      "message": "Not creating a directory of each Web page."
+   },
+   "optWithoutCreatingFolderDescription": {
+      "message": "If checked, the directory of each Web page will not be created, and images will be put into the root directory."
+   },
+   "popupBtnAuthDropbox": {
+      "message": "Connect to Dropbox"
+   },
+   "popupBtnAuthGdrive": {
+      "message": "Connect to Google Drive"
+   },
+   "popupBtnAuthPicasa": {
+      "message": "Connect to Picasa"
+   },
+   "popupBtnAuthSdrive": {
+      "message": "Connect to SkyDrive"
+   },
+   "popupBtnCopy": {
+      "message": "Copy"
+   },
+   "popupBtnDropbox": {
+      "message": "Upload images"
+   },
+   "popupBtnGdrive": {
+      "message": "Upload images"
+   },
+   "popupBtnPicasa": {
+      "message": "Upload images"
+   },
+   "popupBtnSave": {
+      "message": "Download"
+   },
+   "popupBtnSdrive": {
+      "message": "Upload images"
+   },
+   "popupBtnSlideShow": {
+      "message": "Start slide-show"
+   },
+   "popupCopied": {
+      "message": "The script was copied to the clipboard."
+   },
+   "popupGoToPageTop": {
+      "message": "Go to page top"
+   },
+   "popupImageCount": {
+      "message": "Image count:"
+   },
+   "popupSavedFile": {
+      "message": "Saved to download folder."
+   },
+   "popupSavedToDropbox": {
+      "message": "Registered the reservation task."
+   },
+   "popupSavedToDropboxFail": {
+      "message": "The reservation of the registeration task failed."
+   },
+   "popupSavedToGdrive": {
+      "message": "Registered the reservation task."
+   },
+   "popupSavedToGdriveFail": {
+      "message": "The reservation of the registeration task failed."
+   },
+   "popupSavedToPicasa": {
+      "message": "Registered the reservation task."
+   },
+   "popupSavedToPicasaFail": {
+      "message": "The reservation of the registration task failed."
+   },
+   "popupSavedToSdrive": {
+      "message": "Registered the reservation task."
+   },
+   "popupSavedToSdriveFail": {
+      "message": "The reservation of the registeration task failed."
+   }
+}

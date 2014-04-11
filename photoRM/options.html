@@ -1,0 +1,261 @@
+<html>
+
+<head>
+  <title>HTTPA Smart Client extension</title>
+  <link rel="stylesheet" type="text/css" href="css/options.css" />
+  <script type="text/javascript" src="./prototype.js"></script>
+  <script type="text/javascript" src="./utils.js"></script>
+  <script type="text/javascript" src="./options.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript" src="./analytics.js"></script>
+
+<div class="title_pane">
+  <img src="./icon48.png" />
+  <div class="title">HTTPA PhotoRM</div>
+  <br style="clear: both;" />
+  <div id="optWelcome"></div>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optFilter"></span></div>
+  <table>
+    <tr>
+      <td colspan="2">
+        <span id="optFilterExts"></span>:
+        <input type="text" id="filter_exts" size="50" />
+        <button id="filter_exts_save"></button>
+        <span id="filter_exts_result"></span>
+        <div class="description" id="optFilterExtsDescription"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <span id="optFilterExcepts"></span>:
+        <input type="text" id="filter_excepts" size="50" />
+        <button id="filter_excepts_save"></button>
+        <span id="filter_excepts_result"></span>
+        <div class="description" id="optFilterExceptsDescription"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <span id="optFilterSize"></span>:
+        <span id="optFilterSizeWidth"></span>
+        <select id="filter_size_width">
+          <option value="0">0</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value="500">500</option>
+          <option value="750">750</option>
+          <option value="1000">1000</option>
+        </select>
+        <span id="optFilterSizeHeight"></span>
+        <select id="filter_size_height">
+          <option value="0">0</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="200">200</option>
+          <option value="300">300</option>
+          <option value="500">500</option>
+          <option value="750">750</option>
+          <option value="1000">1000</option>
+        </select>
+        <button id="filter_size_save"></button>
+        <span id="filter_size_result"></span>
+        <div class="description" id="optFilterSizeDescription"></div>
+      </td>
+    </tr>
+    <tr>
+      <td class="checkbox_col">
+        <input type="checkbox" id="priority_link_href" />
+      </td>
+      <td>
+        <span id="optFilterPriorityLinkHref"></span>
+        <div class="description" id="optFilterPriorityLinkHrefDescription"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optServices"></span></div>
+  <table>
+    <tr>
+      <td class="icon_col">
+        <img src="./dropbox.png" />
+      </td>
+      <td>
+        Dropbox:
+        <div id="dropbox_authorized"></div>
+        <div id="dropbox_unauthorized"></div>
+        <button id="auth_dropbox"></button>
+        <button id="cancel_dropbox"></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="icon_col">
+        <img src="./googledrive.png" />
+      </td>
+      <td>
+        Google Drive:
+        <div id="gdrive_authorized"></div>
+        <div id="gdrive_unauthorized"></div>
+        <button id="auth_gdrive"></button>
+        <button id="cancel_gdrive"></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="icon_col">
+        <img src="./skydrive.png" />
+      </td>
+      <td>
+        SkyDrive:
+        <div id="sdrive_authorized"></div>
+        <div id="sdrive_unauthorized"></div>
+        <button id="auth_sdrive"></button>
+        <button id="cancel_sdrive"></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="icon_col">
+        <img src="./picasa.png" />
+      </td>
+      <td>
+        Picasa:
+        <div id="picasa_authorized"></div>
+        <div id="picasa_unauthorized"></div>
+        <button id="auth_picasa"></button>
+        <button id="cancel_picasa"></button>
+      </td>
+    </tr>
+    <tr>
+      <td class="checkbox_col">
+        <input type="checkbox" id="without_creating_folder" />
+      </td>
+      <td>
+        <span id="optWithoutCreatingFolder"></span>
+        <div class="description" id="optWithoutCreatingFolderDescription"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optShortcut"></span></div>
+  <table>
+    <tr>
+      <td class="checkbox_col">
+        <input type="checkbox" id="use_shortcut_download_service" />
+      </td>
+      <td>
+        <span id="optShortcutDownloadService1">
+        </span>
+        <select id="shortcut_download_service">
+          <option value="local">Local HDD</option>
+          <option value="dropbox">Dropbox</option>
+          <option value="gdrive">Google Drive</option>
+          <option value="sdrive">SkyDrive</option>
+          <option value="picasa">Picasa</option>
+        </select>
+        <span id="optShortcutDownloadService2">
+        </span>
+        <div class="description" id="optShortcutDownloadDescription">
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optBookmark"></span></div>
+  <table>
+    <tr>
+      <td class="checkbox_col">
+        <input type="checkbox" id="dont_create_page_bookmark" />
+      </td>
+      <td>
+        <span id="optDontCreatePageBookmark"></span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optPreview"></span></div>
+  <table>
+    <tr>
+      <td>
+        <span id="optPreviewLocation"></span>
+        <select id="preview_position">
+        </select>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optHoverZoom"></span></div>
+  <table>
+    <tr>
+      <td class="checkbox_col">
+        <input type="checkbox" id="dont_hover_zoom" />
+      </td>
+      <td>
+        <span id="optDontHoverZoom"></span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optCommand"></span></div>
+  <table>
+    <tr>
+      <td>
+        <span id="optCommandTemplate"></span>:
+        <input type="text" id="command_template" size="50" />
+        <button id="command_template_save"></button>
+        <span id="command_template_result"></span><br />
+        <div class="description" id="optCommandTemplateDescription"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optDownload"></span></div>
+  <table>
+    <tr>
+      <td>
+        <span id="optDownloadFilename"></span>:
+        <input type="text" id="download_filename" size="50" />
+        <button id="download_filename_save"></button>
+        <span id="download_filename_result"></span><br />
+        <div class="description" id="optDownloadFilenameDescription"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section_pane">
+  <div class="section_title"><span id="optStat"></span></div>
+  <table>
+    <tr>
+      <td>
+        <span id="optStatRemainingJob"></span>:
+        <span id="stat_remaining_job_count">?</span>
+        <span id="optStatPageCount"></span>:
+        <span id="stat_page_count">?</span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+
+</html>
