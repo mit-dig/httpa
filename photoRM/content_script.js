@@ -250,25 +250,156 @@ if (typeof CS == "undefined") {
             panel.appendChild(modify);
             
             modify.onclick = function(evt) {
-                var changeText = document.getElementById('modifytext').value;
 
-                document.body.innerHTML ='';
-                document.body.appendChild(panel);
-                var canvas = document.createElement('canvas');
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                var ctx = canvas.getContext('2d');
+                var canvas;
+                var ctx;
+                var x = 75;
+                var y = 50;
+                var dx = 5;
+                var dy = 3;
+                var WIDTH = 400;
+                var HEIGHT = 300;
+                var dragok = false,
+                    text = document.getElementById('modifytext').value,
+                    textLength = (text.length * 14)/2;
                 var imageObj = new Image();
-                imageObj.onload = function() {
-                    ctx.drawImage(imageObj, 0, 0);
+                
+
+                function rect(x,y,w,h) {
                     ctx.fillStyle = "#FF0000";
                     ctx.font = "bold 16px Arial";
-                    ctx.fillText(changeText,100, 100);
+                    ctx.fillText(text,x, y);
+                
+                }
+
+                function clear() {
+                    ctx.drawImage(imageObj, 0, 0);
+                }
+
+                function draw() {
+                    clear();
+                    rect(x - 15, y + 15, textLength, 30);
+                }
+
+                function myMove(e){
+                    if (dragok){
+                        x = e.pageX - canvas.offsetLeft;
+                        y = e.pageY - canvas.offsetTop;
+                    }
+                }
+
+                
+                
+                document.body.innerHTML ='';
+                document.body.appendChild(panel);
+                canvas = document.createElement('canvas');
+                canvas.id = 'imageModifyCanvas';
+                ctx = canvas.getContext('2d');
+                imageObj.onload = function() {
+                    ctx.drawImage(imageObj, 0, 0);
+                    setInterval(draw, 10);
                 };
                 imageObj.src = document.URL;
 
+                canvas.width = imageObj.width;
+                canvas.height = imageObj.height;
+
+                canvas.onmousedown = function(e){
+                    if (e.pageX < x + textLength + canvas.offsetLeft && 
+                        e.pageX > x - textLength + canvas.offsetLeft && 
+                        e.pageY < y + 15 + canvas.offsetTop &&
+                        e.pageY > y -15 + canvas.offsetTop){
+                        x = e.pageX - canvas.offsetLeft;
+                        y = e.pageY - canvas.offsetTop;
+                        dragok = true;
+                        canvas.onmousemove = myMove;
+                    }
+                }
+
+                canvas.onmouseup = function (){
+                    dragok = false;
+                    canvas.onmousemove = null;
+                }
+    
+                
                 document.body.appendChild(canvas);
+                
             };
+
+            var setUsageRestrictions = this.createLinkDiv("Audit Resource");
+            panel.appendChild(setUsageRestrictions);
+
+            setUsageRestrictions.onclick = function(evt){
+
+                var message = {
+                    type: "audit",
+                    resource: window.location.href,
+                };
+                chrome.extension.sendMessage(message);
+
+            }
+
+
+            var saveImage = this.createLinkDiv("Save Image");
+            panel.appendChild(saveImage);
+            
+            getImageData = function(){
+                var canvas = document.getElementById("imageModifyCanvas");
+
+                // Convert that back to a dataURL
+                var dataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");;
+                return dataURL.replace(/data:image\/png;base64,/, '');
+            }   
+
+            saveImage.onclick = function(evt){
+
+                window.location.href = getImageData(); 
+
+            }
+
+            var uploadImage = this.createLinkDiv("Upload Image");
+            panel.appendChild(uploadImage);
+
+            uploadImage.onclick = function (evt){
+
+                var API_KEY = 'd702179326fa144';
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://api.imgur.com/2/upload.json?key=' + API_KEY, true); 
+                xhr.setRequestHeader('Cache-Control', 'no-cache');
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        var response = JSON.parse(xhr.response);
+              
+                        // Check for error.
+                        if (response.error) {
+                            alert('Error: ' + response.error.message);
+                            return;
+                        }
+              
+                        // Retrieve the image url.
+                        //alert('Image URL: ' + response.upload.links.original);
+
+                        var message = {
+                            type: "updatePTN",
+                            original: window.location.href,
+                            derivative: response.upload.links.original,
+                        };
+                        chrome.extension.sendMessage(message);
+
+                        }
+                };
+      
+                // Get the base64 image using HTML5 Canvas.
+                var canvas = document.getElementById("imageModifyCanvas");
+
+                var image64 = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+      
+                // Properly escape the contents of the image. And post it.
+                var post_data =  unescape(encodeURIComponent(image64));
+                xhr.send(post_data); 
+
+            }
+            
         },
         createPreviewClose: function(panel) {
             var close = this.createLinkDiv("Hide");

@@ -17,7 +17,7 @@ Options.prototype = {
         this.checkGDriveAuthorized();
         this.checkSDriveAuthorized();
         this.checkPicasaAuthorized();
-        this.loadMonitor();
+//        this.loadMonitor();
     },
     setupUIs: function() {
         var previewPosition = $("preview_position");
@@ -35,10 +35,14 @@ Options.prototype = {
     },
     assignMessages: function() {
         var hash = {
-            "optCommand": "optCommand",
-            "optCommandTemplate": "optCommandTemplate",
-            "optCommandTemplateDescription": "optCommandTemplateDescription",
-            "command_template_save": "optCommandTemplateSave",
+            "optUser": "optUser",
+            "optUserTemplate": "optUserTemplate",
+            "optUserTemplateDescription": "optUserTemplateDescription",
+            "user_template_save": "optUserTemplateSave",
+            // // "optCommand": "optCommand",
+            // // "optCommandTemplate": "optCommandTemplate",
+            // // "optCommandTemplateDescription": "optCommandTemplateDescription",
+            // "command_template_save": "optCommandTemplateSave",
             "optFilter": "optFilter",
             "optFilterExts": "optFilterExts",
             "optFilterExtsDescription": "optFilterExtsDescription",
@@ -53,49 +57,51 @@ Options.prototype = {
             "optFilterPriorityLinkHref": "optFilterPriorityLinkHref",
             "optFilterPriorityLinkHrefDescription": "optFilterPriorityLinkHrefDescription",
             "filter_size_save": "optFilterSizeSave",
-            "optDownload": "optDownload",
-            "optDownloadFilename": "optDownloadFilename",
-            "download_filename_save": "optDownloadFilenameSave",
-            "optDownloadFilenameDescription": "optDownloadFilenameDescription",
-            "optServices": "optServices",
-            "dropbox_authorized": "optDropboxAuthorized",
-            "dropbox_unauthorized": "optDropboxUnauthorized",
-            "auth_dropbox": "optAuthDropbox",
-            "cancel_dropbox": "optCancelDropbox",
-            "gdrive_authorized": "optGDriveAuthorized",
-            "gdrive_unauthorized": "optGDriveUnauthorized",
-            "auth_gdrive": "optAuthGDrive",
-            "cancel_gdrive": "optCancelGDrive",
-            "optWithoutCreatingFolder": "optWithoutCreatingFolder",
-            "optWithoutCreatingFolderDescription": "optWithoutCreatingFolderDescription",
-            "optStat": "optStat",
-            "optStatRemainingJob": "optStatRemainingJob",
-            "optStatPageCount": "optStatPageCount",
-            "sdrive_authorized": "optSDriveAuthorized",
-            "sdrive_unauthorized": "optSDriveUnauthorized",
-            "auth_sdrive": "optAuthSDrive",
-            "cancel_sdrive": "optCancelSDrive",
+            // "optDownload": "optDownload",
+            // "optDownloadFilename": "optDownloadFilename",
+            // "download_filename_save": "optDownloadFilenameSave",
+            // "optDownloadFilenameDescription": "optDownloadFilenameDescription",
+            // "optServices": "optServices",
+            // "dropbox_authorized": "optDropboxAuthorized",
+            // "dropbox_unauthorized": "optDropboxUnauthorized",
+            // "auth_dropbox": "optAuthDropbox",
+            // "cancel_dropbox": "optCancelDropbox",
+            // "gdrive_authorized": "optGDriveAuthorized",
+            // "gdrive_unauthorized": "optGDriveUnauthorized",
+            // "auth_gdrive": "optAuthGDrive",
+            // "cancel_gdrive": "optCancelGDrive",
+            // "optWithoutCreatingFolder": "optWithoutCreatingFolder",
+            // "optWithoutCreatingFolderDescription": "optWithoutCreatingFolderDescription",
+            // "optStat": "optStat",
+            // "optStatRemainingJob": "optStatRemainingJob",
+            // "optStatPageCount": "optStatPageCount",
+            // "sdrive_authorized": "optSDriveAuthorized",
+            // "sdrive_unauthorized": "optSDriveUnauthorized",
+            // "auth_sdrive": "optAuthSDrive",
+            // "cancel_sdrive": "optCancelSDrive",
             "optPreview": "optPreview",
             "optPreviewLocation": "optPreviewLocation",
-            "optBookmark": "optBookmark",
-            "optDontCreatePageBookmark": "optDontCreatePageBookmark",
-            "optShortcut": "optShortcut",
-            "optShortcutDownloadService1": "optShortcutDownloadService1",
-            "optShortcutDownloadService2": "optShortcutDownloadService2",
-            "optShortcutDownloadDescription": "optShortcutDownloadDescription",
-            "optHoverZoom": "optHoverZoom",
-            "optDontHoverZoom": "optDontHoverZoom",
-            "optWelcome": "optWelcome",
-            "picasa_authorized": "optPicasaAuthorized",
-            "picasa_unauthorized": "optPicasaUnauthorized",
-            "auth_picasa": "optAuthPicasa",
-            "cancel_picasa": "optCancelPicasa"
+            // "optBookmark": "optBookmark",
+            // "optDontCreatePageBookmark": "optDontCreatePageBookmark",
+            // "optShortcut": "optShortcut",
+            // "optShortcutDownloadService1": "optShortcutDownloadService1",
+            // "optShortcutDownloadService2": "optShortcutDownloadService2",
+            // "optShortcutDownloadDescription": "optShortcutDownloadDescription",
+            // "optHoverZoom": "optHoverZoom",
+            // "optDontHoverZoom": "optDontHoverZoom",
+            // "optWelcome": "optWelcome",
+            // "picasa_authorized": "optPicasaAuthorized",
+            // "picasa_unauthorized": "optPicasaUnauthorized",
+            // "auth_picasa": "optAuthPicasa",
+            // "cancel_picasa": "optCancelPicasa"
           };
         utils.setMessageResources(hash);
     },
     assignEventHandlers: function() {
-        $("command_template_save").onclick =
-            this.onClickCommandTemplateSave.bind(this);
+        // $("command_template_save").onclick =
+        //     this.onClickCommandTemplateSave.bind(this);
+        $("user_template_save").onclick =
+            this.onClickUserTemplateSave.bind(this);
         $("filter_exts_save").onclick =
             this.onClickFilterExtsSave.bind(this);
         $("filter_excepts_save").onclick =
@@ -104,53 +110,55 @@ Options.prototype = {
             this.onClickFilterSizeSave.bind(this);
         $("priority_link_href").onclick =
             this.onClickPriorityLinkHref.bind(this);
-        $("download_filename_save").onclick =
-            this.onClickDownloadFilenameSave.bind(this);
-        $("auth_dropbox").onclick =
-            this.onClickAuthDropbox.bind(this);
-        $("cancel_dropbox").onclick =
-            this.onClickCancelDropbox.bind(this);
-        $("auth_gdrive").onclick =
-            this.onClickAuthGDrive.bind(this);
-        $("cancel_gdrive").onclick =
-            this.onClickCancelGDrive.bind(this);
-        $("without_creating_folder").onclick =
-            this.onClickWithoutCreatingFolder.bind(this);
-        $("auth_sdrive").onclick =
-            this.onClickAuthSDrive.bind(this);
-        $("cancel_sdrive").onclick =
-            this.onClickCancelSDrive.bind(this);
+        // $("download_filename_save").onclick =
+        //     this.onClickDownloadFilenameSave.bind(this);
+        // $("auth_dropbox").onclick =
+        //     this.onClickAuthDropbox.bind(this);
+        // $("cancel_dropbox").onclick =
+        //     this.onClickCancelDropbox.bind(this);
+        // $("auth_gdrive").onclick =
+        //     this.onClickAuthGDrive.bind(this);
+        // $("cancel_gdrive").onclick =
+        //     this.onClickCancelGDrive.bind(this);
+        // $("without_creating_folder").onclick =
+        //     this.onClickWithoutCreatingFolder.bind(this);
+        // $("auth_sdrive").onclick =
+        //     this.onClickAuthSDrive.bind(this);
+        // $("cancel_sdrive").onclick 
+        //     this.onClickCancelSDrive.bind(this);
         $("preview_position").onchange =
             this.onChangePreviewPosition.bind(this);
-        $("dont_create_page_bookmark").onclick =
-            this.onClickDontCreatePageBookmark.bind(this);
-        $("shortcut_download_service").onchange =
-            this.onChangeShortcutDownloadService.bind(this);
-        $("use_shortcut_download_service").onclick =
-            this.onClickUseShortcutDownloadService.bind(this);
-        $("dont_hover_zoom").onclick =
-            this.onClickDontHoverZoom.bind(this);
-        $("auth_picasa").onclick =
-            this.onClickAuthPicasa.bind(this);
-        $("cancel_picasa").onclick =
-            this.onClickCancelPicasa.bind(this);
+        $("user_template_save").onclick =
+            this.onClickUserTemplateSave.bind(this);
+        // $("dont_create_page_bookmark").onclick =
+        //     this.onClickDontCreatePageBookmark.bind(this);
+        // $("shortcut_download_service").onchange =
+        //     this.onChangeShortcutDownloadService.bind(this);
+        // $("use_shortcut_download_service").onclick =
+        //     this.onClickUseShortcutDownloadService.bind(this);
+        // $("dont_hover_zoom").onclick =
+        //     this.onClickDontHoverZoom.bind(this);
+        // $("auth_picasa").onclick =
+        //     this.onClickAuthPicasa.bind(this);
+        // $("cancel_picasa").onclick =
+        //     this.onClickCancelPicasa.bind(this);
     },
     restoreConfigurations: function() {
         chrome.runtime.getBackgroundPage(function(bg) {
-            $("command_template").value = bg.ic.getCommandTemplate();
+//            $("command_template").value = bg.ic.getCommandTemplate();
             $("filter_exts").value = bg.ic.getFilterExts();
             $("filter_excepts").value = bg.ic.getFilterExcepts();
             $("filter_size_width").value = bg.ic.getFilterSizeWidth();
             $("filter_size_height").value = bg.ic.getFilterSizeHeight();
-            $("priority_link_href").checked = bg.ic.isPriorityLinkHref();
-            $("download_filename").value = bg.ic.getDownloadFilename();
-            $("without_creating_folder").checked = bg.ic.isWithoutCreatingFolder();
+            // $("priority_link_href").checked = bg.ic.isPriorityLinkHref();
+            // $("download_filename").value = bg.ic.getDownloadFilename();
+            // $("without_creating_folder").checked = bg.ic.isWithoutCreatingFolder();
             $("preview_position").value = bg.ic.getPreviewPosition();
-            $("dont_create_page_bookmark").checked = bg.ic.isDontCreatePageBookmark();
-            $("shortcut_download_service").value = bg.ic.getShortcutDownloadService();
-            $("use_shortcut_download_service").checked = bg.ic.isUseShortcutDownloadService();
-            $("shortcut_download_service").disabled = !bg.ic.isUseShortcutDownloadService();
-            $("dont_hover_zoom").checked = bg.ic.isDontHoverZoom();
+            // $("dont_create_page_bookmark").checked = bg.ic.isDontCreatePageBookmark();
+            // $("shortcut_download_service").value = bg.ic.getShortcutDownloadService();
+            // $("use_shortcut_download_service").checked = bg.ic.isUseShortcutDownloadService();
+            // $("shortcut_download_service").disabled = !bg.ic.isUseShortcutDownloadService();
+            // $("dont_hover_zoom").checked = bg.ic.isDontHoverZoom();
         });
     },
     checkDropboxAuthorized: function() {
@@ -207,10 +215,16 @@ Options.prototype = {
     },
     onClickCommandTemplateSave: function(evt) {
         localStorage["command_template"] = $("command_template").value;
-        $("command_template_result").innerHTML =
-            chrome.i18n.getMessage("optCommandTemplateSaveSucceed");
+        $("command_template_result").innerHTML = chrome.i18n.getMessage("optCommandTemplateSaveSucceed");
         setTimeout(function() {
             $("command_template_result").innerHTML = "";
+        }, 5000);
+    },
+    onClickUserTemplateSave: function(evt) {
+        localStorage["user"] = $("user").value;
+        $("user_template_result").innerHTML = 'success!';
+        setTimeout(function() {
+            $("user_template_result").innerHTML = "";
         }, 5000);
     },
     onClickFilterExtsSave: function(evt) {
@@ -353,19 +367,19 @@ Options.prototype = {
     onClickDontHoverZoom: function() {
         this.changeCheckboxConfiguration("dont_hover_zoom");
     },
-    loadMonitor: function() {
-        chrome.runtime.getBackgroundPage(function(bg) {
-            bg.ic.loadMonitor({
-                onSuccess: function(req) {
-                    var result = req.responseJSON;
-                    $("stat_remaining_job_count").innerText =
-                        this.addFigure(result.job_count);
-                    $("stat_page_count").innerText =
-                        this.addFigure(result.page_count);
-                }.bind(this)
-            });
-        }.bind(this));
-    },
+    // loadMonitor: function() {
+    //     chrome.runtime.getBackgroundPage(function(bg) {
+    //         bg.ic.loadMonitor({
+    //             onSuccess: function(req) {
+    //                 var result = req.responseJSON;
+    //                 $("stat_remaining_job_count").innerText =
+    //                     this.addFigure(result.job_count);
+    //                 $("stat_page_count").innerText =
+    //                     this.addFigure(result.page_count);
+    //             }.bind(this)
+    //         });
+    //     }.bind(this));
+    // },
     addFigure: function(value) {
         var num = new String(value).replace(/,/g, "");
         while (num != (num = num.replace(/^(-?\d+)(\d{3})/, "$1,$2")));

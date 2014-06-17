@@ -34,7 +34,7 @@
       "default_icon": "icon19.png",
       "default_popup": "popup.html"
    },
-   "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus", "bookmarks" ],
+   "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus", "bookmarks", "identity" ],
    "short_name": "Ice",
    "version": "7.0.1",
    "web_accessible_resources": [ "options.html" ]

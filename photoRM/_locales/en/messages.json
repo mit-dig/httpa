@@ -58,6 +58,25 @@
    "optCommandTemplateSaveSucceed": {
       "message": "Succeeded."
    },
+   
+
+   "optUser": {
+      "message": "User Profile"
+   },
+   "optUserTemplate": {
+      "message": "WebID"
+   },
+   "optUserTemplateDescription": {
+      "message": "Please enter a unique identifer for this user (The WebID preferred.)."
+   },
+   "optUserTemplateSave": {
+      "message": "Save"
+   },
+   "optUserTemplateSaveSucceed": {
+      "message": "User profile saved."
+   },
+   
+
    "optDontCreatePageBookmark": {
       "message": "Don't create a bookmark of the Web page, when the images saved."
    },

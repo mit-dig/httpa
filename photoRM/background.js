@@ -150,6 +150,62 @@ IC.prototype = {
         } else if (message.type == "dismiss_hotpreview") {
             localStorage["preview_position"] = "none";
         }
+        else if (message.type == "updatePTN"){
+            var originalSetVal = {"user" : encodeURIComponent(localStorage['user']),
+                                   "derivative" : encodeURIComponent(message.derivative),
+                                   "usage_restictions" : "None" };
+            var derivativeSetVal = {"user" : encodeURIComponent(localStorage['user']),
+                                   "original" : encodeURIComponent(message.original),
+                                   "usage_restictions" : "None" };
+            
+            utils.callPhotoRMService('set' , message.original, originalSetVal, function (){});
+            utils.callPhotoRMService('set' , message.derivative, derivativeSetVal, function (){});
+
+        }
+        else if (message.type == "audit"){
+
+            $.ajax({
+              url: 'http://photorm.herokuapp.com/get/' + encodeURIComponent(message.resource) ,
+              // dataType: 'json',
+              success: function(data) {
+                // parse you data received from server here
+                // data.count
+                alert(data);
+              }
+            });
+
+
+           // alert(utils.getCurrentDate());
+            var store = N3.Store();
+            store.addTriple(':Pluto', 'a', ':Dog');
+            store.addTriple(':Mickey', 'a', ':Mouse');
+            store.addTriple(':Mickey', 'a', ':Human');
+
+            var mickey = store.find(':Mickey', null, null);
+            for (var i=0; i<mickey.length; i++){
+                m = mickey[i];
+            //    alert(m.subject + " " + m.predicate + " " + m.object + ' . ');
+            }
+            
+            //console.log(mickey.subject + " " + mickey.predicate + " " + mickey.object + ' . ');
+
+            // var parser = N3.Parser();
+            // parser.parse('@prefix c: <http://example.org/cartoons#>.\n' +
+            //              'c:Tom a c:Cat.\n' +
+            //              'c:Jerry a c:Mouse;\n' +
+            //              '        c:smarterThan c:Tom.',
+            //             function (error, triple, prefixes) {
+            //                 if (triple){
+            //                     alert(triple.subject);
+            //                     console.log(triple.subject, triple.predicate, triple.object, '.');
+                           
+            //                 }
+            //                 else{
+            //                     console.log("# That's all, folks!", prefixes)
+            //                 }
+            //             });
+
+        }
         sendRequest({});
     },
     sendTargetImages: function(urls, tab) {
@@ -429,6 +485,11 @@ IC.prototype = {
     getPreviewPosition: function() {
         return utils.getOptionValue("preview_position", "bottom_right");
     },
+
+    getUserIdentifier: function(){
+        return utils.getOptionValue("user", "http://example.com/test"); 
+    },
+
     startSlideShow: function(callback) {
         chrome.tabs.getSelected(null, function(tab) {
             var url = chrome.extension.getURL(
@@ -599,20 +660,22 @@ var ic = new IC();
 //TODO: refactor the following code back in to the model
 
 // Handle requests for passwords
-chrome.runtime.onMessage.addListener(function(request) {
-    if (request.type === 'request_password') {
-        chrome.tabs.create({
-            url: chrome.extension.getURL('dialog.html'),
-            active: false
-        }, function(tab) {
-            // After the tab has been created, open a window to inject the tab
-            password({
-                tabId: tab.id,
-                type: 'popup',
-                focused: true
-                // incognito, top, left, ...
-            });
-        });
+chrome.runtime.onMessage.addListener(function(request, response) {
+    if (request.greeting === 'hello') {
+        response({'greeting': "farewell"});
+        // chrome.tabs.create({
+        //     url: chrome.extension.getURL('dialog.html'),
+        //     active: false
+        // }, function(tab) {
+        //     // After the tab has been created, open a window to inject the tab
+        //     password({
+        //         tabId: tab.id,
+        //         type: 'popup',
+        //         focused: true
+        //         // incognito, top, left, ...
+        //     });
+        // });
+     return true;
     }
 });
 function setPassword(password) {
@@ -630,3 +693,4 @@ function setPassword(password) {
         });
 
 };
+
