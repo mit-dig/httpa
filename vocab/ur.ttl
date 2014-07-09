@@ -6,8 +6,70 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/>
 @prefix wot: <http://xmlns.com/wot/0.1/>
 @prefix dc: <http://purl.org/dc/elements/1.1/>
-@prefix ur: <http://#>
+@prefix ur: <http://https://raw.githubusercontent.com/mit-dig/httpa/master/vocab/ur.ttl#>
+
+
+
+ur:activity a rdfs:Property;
+	rdfs:label "generic constraint".
+
+ur:after a rdfs:Property;
+	rdfs:domain ur:Activity;
+	rdfs:range ur:Condition;
+	rdfs:label "connects a temporal constraint with a condition".
+
+ur:before a rdfs:Property;
+	ur:domain ur:Activity;
+	ur:range ur:Condition;
+	rdfs:label "connects a temporal constraint with a condition".
+
+###################################
+# Different Types of Activities   #
+###################################
+
+ur:Access a rdfs:Class;
+	rdfs:label "accessing a resource".
+
+ur:Delete a rdfs:Class;
+	rdfs:label "deleting a resource".
+
+ur:Modify a rdfs:Class;
+	rdfs:label "modify a resource".
+
+ur:Share a rdfs:Class;
+	rdfs:label "share a resource".
+
+ur:Publish a rdfs:Class;
+	rdfs:label "deleting a resource".
+
+ur:Store a rdfs:Class;
+	rdfs:label "stroing a resource in a database".
+
+
+
+
+
+
 
 ur:Constraint a rdfs:Class;
-rdfs:comment "a generic constraint";
-rdfs:label "license."
+rdfs:label "generic constriant".
+
+
+###################################
+# Different Types of Constraints  #
+###################################
+ 
+ur:TemporalConstraint a ur:Constraint;
+	rdfs:label "indicates something that expires within a specified time".
+
+
+###########################################
+# Examples for Temporal Constraints 	  #
+###########################################
+
+ur:deleteAfter30Days a ur:TemporalConstraint;
+	ur:activity ur:Delete;
+	
+	
+
+
