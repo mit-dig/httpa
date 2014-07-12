@@ -30,12 +30,10 @@ div.pane_header img {
 
 td.image_table {
     background-color: white;
-    width: 300px;
 }
 
 div.image_pane {
     position: relative;
-    width: 300px;
 }
 
 #images {

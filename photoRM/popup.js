@@ -24,13 +24,13 @@ Popup.prototype = {
 
     },
     assignMessages: function() {
-        var hash = {
-            "btnSlideShow": "popupBtnSlideShow",
-        };
-        utils.setMessageResources(hash);
+        // var hash = {
+        //     "btnSlideShow": "popupBtnSlideShow",
+        // };
+        // utils.setMessageResources(hash);
     },
     assignEventHandlers: function() {
-        $("btnSlideShow").onclick = this.onClickSlideShow.bind(this);
+    //    $("btnSlideShow").onclick = this.onClickSlideShow.bind(this);
         $("btnOption").onclick = this.onClickOption.bind(this);
     },
     onClickOption: function(evt) {
