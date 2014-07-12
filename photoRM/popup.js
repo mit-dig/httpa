@@ -52,7 +52,8 @@ Popup.prototype = {
         }.bind(this));
     },
     showInfo: function(info) {
-        $("image_count").innerHTML = info.urls.length + " images found";
+        var imgStr = ((info.urls.length > 1 ) ? "images" : "image");
+        $("image_count").innerHTML = info.urls.length + " "+ imgStr + " found";
     },
     createScript: function(callback) {
         chrome.runtime.getBackgroundPage(function(bg) {
@@ -99,8 +100,8 @@ Popup.prototype = {
             link.appendChild(img);
             parent.appendChild(document.createElement("br"));
             div = this.createImageFunctionDiv(parent);
-            this.appendTwitter(div, url);
-            this.appendFacebook(div, url);
+            //this.appendTwitter(div, url);
+            //this.appendFacebook(div, url);
             this.appendDelete(div, url, parent);
             this.appendGoto(div, url);
             parent.appendChild(div);

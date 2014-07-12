@@ -7,6 +7,7 @@ Options.prototype = {
         window.addEventListener("load", function(evt) {
             this.start();
         }.bind(this));
+
     },
     start: function() {
         this.setupUIs();
@@ -17,7 +18,7 @@ Options.prototype = {
         this.checkGDriveAuthorized();
         this.checkSDriveAuthorized();
         this.checkPicasaAuthorized();
-//        this.loadMonitor();
+ //        this.loadMonitor();
     },
     setupUIs: function() {
         var previewPosition = $("preview_position");

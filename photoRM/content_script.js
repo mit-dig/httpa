@@ -157,7 +157,7 @@ if (typeof CS == "undefined") {
             var panel = this.createPreviewPanel(position);
             document.body.appendChild(panel);
             this.createPreviewClose(panel);
-            this.createPreviewImages(images, panel, tabId);
+            //this.createPreviewImages(images, panel, tabId);
             this.createPreviewModify(panel);
             this.createPreviewOption(panel);
         },
@@ -166,9 +166,14 @@ if (typeof CS == "undefined") {
             if (panel) {
                 panel.innerHTML = "";
             } else {
+
                 //for standalone images, there is not preview panel previously defined
                 panel = document.createElement("div");
                 panel.id = "ics_preview_panel";
+                panel.title = "HTTPA Modifications Dialog Box";
+
+                //Other css
+
                 panel.style.position = "fixed";
                 panel.style.width = "200px";
                 if (position.indexOf("top") != -1) {
@@ -185,6 +190,10 @@ if (typeof CS == "undefined") {
                 }
                 panel.style.overflow = "auto";
                 panel.style.paddingBottom = "5px";
+                panel.style.border = "2px solid";
+                panel.style['border-radius'] = "25px";
+                panel.style.padding = "25px";
+                   
             }
             return panel;
         },
@@ -402,7 +411,21 @@ if (typeof CS == "undefined") {
             
         },
         createPreviewClose: function(panel) {
-            var close = this.createLinkDiv("Hide");
+
+            //Todo: this image doesn't seem to work when in local file store
+            var img = document.createElement("img");
+            img.setAttribute("src", "https://www.thehirescene.com/wp-content/themes/hireScene/images/close.png");
+            img.setAttribute("height", "30px");
+
+            var close = document.createElement("div");
+            close.style.textAlign = "right";
+            close.style.textDecoration = "underline";
+            close.style.cursor = "pointer";
+            close.style.fontSize = "14px";
+            close.style.marginTop = "10px";
+            close.title = "Close this dialog";
+            close.appendChild(img);
+ 
             panel.appendChild(close);
             close.onclick = function(evt) {
                 document.body.removeChild(panel);
@@ -415,7 +438,7 @@ if (typeof CS == "undefined") {
                 var url = chrome.extension.getURL("options.html");
                 location.href = url;
             };
-            var dismiss = this.createLinkDiv("Dismiss");
+            var dismiss = this.createLinkDiv("Do not show this again");
             panel.appendChild(dismiss);
             dismiss.onclick = this.hitch(function(evt) {
                 this.sendDismissHotPreviewMessage();
