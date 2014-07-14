@@ -1,6 +1,6 @@
 {
    "extDescription": {
-      "message": "This extension provides you to download images on the page you visit quickly to your PC, Dropbox, Google Drive, Picasa and SkyDrive."
+      "message": "This is a demonstration of an Accountable Client-side Tool"
    },
    "menuReloadImages": {
       "message": "Reload images"
@@ -64,10 +64,11 @@
       "message": "User Profile"
    },
    "optUserTemplate": {
-      "message": "WebID"
+      "message": "Your Google Plus Profile"
    },
    "optUserTemplateDescription": {
-      "message": "Please enter a unique identifer for this user (The WebID preferred.)."
+//      "message": "Please enter a unique identifer for this user (The WebID preferred.)."
+      "message": "You are logged in"
    },
    "optUserTemplateSave": {
       "message": "Save"

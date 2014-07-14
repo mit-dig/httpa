@@ -9,6 +9,72 @@ IC.prototype = {
         this.setupEventHandler();
         this.setupContextMenus();
         this.setupBookmark();
+
+        getUserInfo(true);
+
+        function xhrWithAuth(method, url, interactive, callback) {
+
+            var access_token;
+
+            var retry = true;
+
+            getToken();
+
+            function getToken() {
+              chrome.identity.getAuthToken({ interactive: interactive }, function(token) {
+                if (chrome.runtime.lastError) {
+                  callback(chrome.runtime.lastError);
+                  return;
+                }
+
+                access_token = token;
+
+                requestStart();
+              });
+            }
+
+            function requestStart() {
+              var xhr = new XMLHttpRequest();
+              xhr.open(method, url);
+              xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+              xhr.onload = requestComplete;
+              xhr.send();
+            }
+
+            function requestComplete() {
+              if (this.status == 401 && retry) {
+                retry = false;
+                chrome.identity.removeCachedAuthToken({ token: access_token },
+                                                      getToken);
+              } else {
+                callback(null, this.status, this.response);
+              }
+            }
+        }
+
+
+        function getUserInfo(interactive) {
+            xhrWithAuth('GET',
+                'https://www.googleapis.com/plus/v1/people/me',
+                interactive,
+                onUserInfoFetched);
+        }
+
+          // Code updating the user interface, when the user information has been
+          // fetched or displaying the error.
+          function onUserInfoFetched(error, status, response) {
+            if (!error && status == 200) {
+              var user_info = JSON.parse(response);
+              alert(user_info.url);
+            } else {
+                alert(JSON.stringify(error));
+                alert(status);
+            }
+          }
+
+
+
+
     },
     getServerUrl: function() {
         return IC.SERVER_URL;

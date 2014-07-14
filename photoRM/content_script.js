@@ -260,6 +260,7 @@ if (typeof CS == "undefined") {
             
             modify.onclick = function(evt) {
 
+  
                 var canvas;
                 var ctx;
                 var x = 75;
@@ -271,6 +272,7 @@ if (typeof CS == "undefined") {
                 var dragok = false,
                     text = document.getElementById('modifytext').value,
                     textLength = (text.length * 14)/2;
+                
                 var imageObj = new Image();
                 
 
@@ -296,22 +298,24 @@ if (typeof CS == "undefined") {
                         y = e.pageY - canvas.offsetTop;
                     }
                 }
-
-                
                 
                 document.body.innerHTML ='';
                 document.body.appendChild(panel);
+                
                 canvas = document.createElement('canvas');
                 canvas.id = 'imageModifyCanvas';
                 ctx = canvas.getContext('2d');
+                
+                imageObj.src = document.URL;
+
                 imageObj.onload = function() {
+
+                    canvas.width = imageObj.width;
+                    canvas.height = imageObj.height;
+
                     ctx.drawImage(imageObj, 0, 0);
                     setInterval(draw, 10);
                 };
-                imageObj.src = document.URL;
-
-                canvas.width = imageObj.width;
-                canvas.height = imageObj.height;
 
                 canvas.onmousedown = function(e){
                     if (e.pageX < x + textLength + canvas.offsetLeft && 
@@ -412,12 +416,13 @@ if (typeof CS == "undefined") {
         },
         createPreviewClose: function(panel) {
 
+            var title = document.createElement("span");
+            title.appendChild(document.createTextNode("PhotoRM Extension "));
             //Todo: this image doesn't seem to work when in local file store
             var img = document.createElement("img");
             img.setAttribute("src", "https://www.thehirescene.com/wp-content/themes/hireScene/images/close.png");
-            img.setAttribute("height", "30px");
-
-            var close = document.createElement("div");
+            img.setAttribute("height", "25px");
+            var close = document.createElement("span");
             close.style.textAlign = "right";
             close.style.textDecoration = "underline";
             close.style.cursor = "pointer";
@@ -425,7 +430,7 @@ if (typeof CS == "undefined") {
             close.style.marginTop = "10px";
             close.title = "Close this dialog";
             close.appendChild(img);
- 
+            panel.appendChild(title);
             panel.appendChild(close);
             close.onclick = function(evt) {
                 document.body.removeChild(panel);
