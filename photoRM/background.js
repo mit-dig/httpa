@@ -64,8 +64,16 @@ IC.prototype = {
           // fetched or displaying the error.
           function onUserInfoFetched(error, status, response) {
             if (!error && status == 200) {
-              var user_info = JSON.parse(response);
-              alert(user_info.url);
+                var user_info = JSON.parse(response);
+                alert(user_info.url);
+                // Save it using the Chrome extension storage API.
+                chrome.storage.sync.set({'user': user_info}, function() {
+                  // Notify that we saved.
+                  console.log('Settings saved');
+
+                });
+
+              //alert(user_info.url);
             } else {
                 alert(JSON.stringify(error));
                 alert(status);
@@ -759,4 +767,3 @@ function setPassword(password) {
         });
 
 };
-

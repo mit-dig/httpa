@@ -67,8 +67,7 @@
       "message": "Your Google Plus Profile"
    },
    "optUserTemplateDescription": {
-//      "message": "Please enter a unique identifer for this user (The WebID preferred.)."
-      "message": "You are logged in"
+      "message": "You are not logged in. Reload the extension to log in."
    },
    "optUserTemplateSave": {
       "message": "Save"

@@ -8,6 +8,8 @@ Options.prototype = {
             this.start();
         }.bind(this));
 
+
+
     },
     start: function() {
         this.setupUIs();
@@ -19,6 +21,12 @@ Options.prototype = {
         this.checkSDriveAuthorized();
         this.checkPicasaAuthorized();
  //        this.loadMonitor();
+
+         chrome.storage.sync.get("user", function (obj) {
+                document.getElementById("user").value = obj.user.url;
+                document.getElementById("optUserTemplateDescription").innerHTML ="You are logged in.";
+          });
+
     },
     setupUIs: function() {
         var previewPosition = $("preview_position");
@@ -48,9 +56,9 @@ Options.prototype = {
             "optFilterExts": "optFilterExts",
             "optFilterExtsDescription": "optFilterExtsDescription",
             "filter_exts_save": "optFilterExtsSave",
-            "optFilterExcepts": "optFilterExcepts",
-            "optFilterExceptsDescription": "optFilterExceptsDescription",
-            "filter_excepts_save": "optFilterExceptsSave",
+            // "optFilterExcepts": "optFilterExcepts",
+            // "optFilterExceptsDescription": "optFilterExceptsDescription",
+            // "filter_excepts_save": "optFilterExceptsSave",
             "optFilterSize": "optFilterSize",
             "optFilterSizeDescription": "optFilterSizeDescription",
             "optFilterSizeWidth": "optFilterSizeWidth",
@@ -105,8 +113,8 @@ Options.prototype = {
             this.onClickUserTemplateSave.bind(this);
         $("filter_exts_save").onclick =
             this.onClickFilterExtsSave.bind(this);
-        $("filter_excepts_save").onclick =
-            this.onClickFilterExceptsSave.bind(this);
+        // $("filter_excepts_save").onclick =
+        //     this.onClickFilterExceptsSave.bind(this);
         $("filter_size_save").onclick =
             this.onClickFilterSizeSave.bind(this);
         $("priority_link_href").onclick =

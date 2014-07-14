@@ -40,7 +40,7 @@
         "matches": ["http://*/*"],
         "js": ["content_script.js"]
      }],
-   "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus", "bookmarks", "identity", "identity.email" ],
+   "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus", "bookmarks", "identity", "identity.email", "storage" ],
    "short_name": "HTTPA PhotoRM",
    "version": "0.0.2",
    "web_accessible_resources": [ "options.html" ],
