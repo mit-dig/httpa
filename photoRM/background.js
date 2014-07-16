@@ -65,7 +65,7 @@ IC.prototype = {
           function onUserInfoFetched(error, status, response) {
             if (!error && status == 200) {
                 var user_info = JSON.parse(response);
-                alert(user_info.url);
+                //alert(user_info.url);
                 // Save it using the Chrome extension storage API.
                 chrome.storage.sync.set({'user': user_info}, function() {
                   // Notify that we saved.

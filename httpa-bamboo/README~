@@ -1,0 +1,11 @@
+Running the configs (cfg files) to get a small bamboo node running:
+/home/YOURNAME/bamboo/bin/run-java bamboo.lss.DustDevil 3630.cfg &
+/home/YOURNAME/bamboo/bin/run-java bamboo.lss.DustDevil 3633.cfg &
+etc...
+(allternatively, you can run this via screen)
+
+Important:
+When running a put or get operation on the DHT, if you are getting a connection refused error, make sure that in the cfg the nodeid and the gateway is set appropriately.
+
+More information on running bamboo can be found at:
+http://bamboo-dht.org/users-guide.html

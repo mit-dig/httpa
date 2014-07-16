@@ -390,7 +390,7 @@ if (typeof CS == "undefined") {
                         }
               
                         // Retrieve the image url.
-                        //alert('Image URL: ' + response.upload.links.original);
+                        alert('Image URL: ' + response.upload.links.original);
 
                         var message = {
                             type: "updatePTN",
