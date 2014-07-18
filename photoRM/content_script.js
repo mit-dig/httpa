@@ -175,6 +175,9 @@ if (typeof CS == "undefined") {
                 //Other css
 
                 panel.style.position = "fixed";
+                panel.style.background = "#B0B0B0";
+                panel.style.color = "black"
+            
                 panel.style.width = "200px";
                 if (position.indexOf("top") != -1) {
                     panel.style.top = 0;
@@ -359,6 +362,7 @@ if (typeof CS == "undefined") {
             getImageData = function(){
                 var canvas = document.getElementById("imageModifyCanvas");
 
+
                 // Convert that back to a dataURL
                 var dataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");;
                 return dataURL.replace(/data:image\/png;base64,/, '');
@@ -366,11 +370,19 @@ if (typeof CS == "undefined") {
 
             saveImage.onclick = function(evt){
 
-                window.location.href = getImageData(); 
+                //window.location.href = getImageData(); 
+
+                var canvas = document.getElementById("imageModifyCanvas");
+
+                var link = document.createElement('a');
+                link.download = "photorm.png";
+                link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
+                link.click();
+
 
             }
 
-            var uploadImage = this.createLinkDiv("Upload Image");
+            var uploadImage = this.createLinkDiv("Share on imgur.com");
             panel.appendChild(uploadImage);
 
             uploadImage.onclick = function (evt){
@@ -412,6 +424,48 @@ if (typeof CS == "undefined") {
                 xhr.send(post_data); 
 
             }
+
+
+
+            var uploadImageImagehare = this.createLinkDiv("Share on imagehare.com");
+            panel.appendChild(uploadImageImagehare);
+
+            uploadImageImagehare.onclick = function (evt){
+
+
+                var xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', 'http://localhost:8080/upload', true); 
+                
+                xhr.setRequestHeader('usage_restrictions', 'http://usage_restrictions_abc');
+                xhr.setRequestHeader('extension', 'true');
+
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4) {
+                        window.open(xhr.response);
+
+                        }
+                };
+      
+                // Get the base64 image using HTML5 Canvas.
+                var canvas = document.getElementById("imageModifyCanvas");
+
+                var image64 = canvas.toDataURL('image/png', 0.9).split(',')[1];
+
+                var blobBin = atob(image64);
+                var array = [];
+                for(var i = 0; i < blobBin.length; i++) {
+                    array.push(blobBin.charCodeAt(i));
+                }
+                var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
+
+                var formdata = new FormData();
+                formdata.append("upload", file);
+
+                xhr.send(formdata); 
+
+            }
+
             
         },
         createPreviewClose: function(panel) {
@@ -419,9 +473,9 @@ if (typeof CS == "undefined") {
             var title = document.createElement("span");
             title.appendChild(document.createTextNode("PhotoRM Extension "));
             //Todo: this image doesn't seem to work when in local file store
-            var img = document.createElement("img");
-            img.setAttribute("src", "https://www.thehirescene.com/wp-content/themes/hireScene/images/close.png");
-            img.setAttribute("height", "25px");
+            // var img = document.createElement("img");
+            // img.setAttribute("src", chrome.extension.getURL("images/close.png"));
+            // img.setAttribute("height", "25px");
             var close = document.createElement("span");
             close.style.textAlign = "right";
             close.style.textDecoration = "underline";
@@ -429,7 +483,8 @@ if (typeof CS == "undefined") {
             close.style.fontSize = "14px";
             close.style.marginTop = "10px";
             close.title = "Close this dialog";
-            close.appendChild(img);
+            close.appendChild(document.createTextNode(" close"));
+            //close.appendChild(img);
             panel.appendChild(title);
             panel.appendChild(close);
             close.onclick = function(evt) {
@@ -437,7 +492,7 @@ if (typeof CS == "undefined") {
             };
         },
         createPreviewOption: function(panel) {
-            var option = this.createLinkDiv("Option");
+            var option = this.createLinkDiv("Options");
             panel.appendChild(option);
             option.onclick = function(evt) {
                 var url = chrome.extension.getURL("options.html");
@@ -465,7 +520,7 @@ if (typeof CS == "undefined") {
             var text = document.createElement("input");
             text.id = "modifytext";
             text.type = "text";
-            text.value = "Add modification text";
+            text.value = "Say something about this image";
             div.appendChild(document.createElement("br"));
             div.appendChild(text);
             return div;

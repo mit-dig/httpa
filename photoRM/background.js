@@ -365,7 +365,7 @@ IC.prototype = {
         return utils.getOptionValue("command_template", "curl -O -L $url");
     },
     getFilterExts: function() {
-        return utils.getOptionValue("filter_exts", "jpeg jpg");
+        return utils.getOptionValue("filter_exts", "jpeg jpg png");
     },
     getFilterExcepts: function() {
         return utils.getOptionValue("filter_excepts", "amazon");
