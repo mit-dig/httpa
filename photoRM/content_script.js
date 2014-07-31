@@ -616,41 +616,21 @@ if (typeof CS == "undefined") {
                 
                 uploadImage.onclick = function (evt){
 
-                    var API_KEY = 'd702179326fa144';
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'http://api.imgur.com/2/upload.json?key=' + API_KEY, true); 
-                    xhr.setRequestHeader('Cache-Control', 'no-cache');
-                    xhr.onreadystatechange = function() {
-                        if (this.readyState == 4) {
-                            var response = JSON.parse(xhr.response);
-                  
-                            // Check for error.
-                            if (response.error) {
-                                alert('Error: ' + response.error.message);
-                                return;
-                            }
-                  
-                            // Retrieve the image url.
-                            alert('Image URL: ' + response.upload.links.original);
-
-                            var message = {
-                                type: "updatePTN",
-                                original: window.location.href,
-                                derivative: response.upload.links.original,
-                            };
-                            chrome.extension.sendMessage(message);
-
-                            }
-                    };
-          
-                    // Get the base64 image using HTML5 Canvas.
+                    
                     var canvas = document.getElementById("imageModifyCanvas");
-
                     var image64 = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
           
-                    // Properly escape the contents of the image. And post it.
+                    //Properly escape the contents of the image. And post it.
                     var post_data =  unescape(encodeURIComponent(image64));
-                    xhr.send(post_data); 
+                    
+                    var xhr = new XMLHttpRequest(); 
+                    xhr.open("POST", "https://api.imgur.com/3/image.json"); 
+                    xhr.onload = function () {
+                        alert("Your image is at "+JSON.parse(xhr.response).data.link);
+                    }
+                    xhr.setRequestHeader('Authorization', 'Client-ID d702179326fa144');
+
+                    xhr.send(post_data);
 
                 };
 
