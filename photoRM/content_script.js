@@ -176,9 +176,10 @@ if (typeof CS == "undefined") {
 
                 panel.style.position = "fixed";
                 panel.style.background = "#B0B0B0";
-                panel.style.color = "black"
+                panel.style.color = "black";
+                panel.style['font-family'] = "Arial,Helvetica,sans-serif";
             
-                panel.style.width = "200px";
+                panel.style.width = "250px";
                 if (position.indexOf("top") != -1) {
                     panel.style.top = 0;
                 }
@@ -196,6 +197,7 @@ if (typeof CS == "undefined") {
                 panel.style.border = "2px solid";
                 panel.style['border-radius'] = "25px";
                 panel.style.padding = "25px";
+                panel.style.margin = "25px";
                    
             }
             return panel;
@@ -483,18 +485,14 @@ if (typeof CS == "undefined") {
         createPreviewClose: function(panel) {
 
             var title = document.createElement("span");
-            title.appendChild(document.createTextNode("PhotoRM Extension "));
-            var close = document.createElement("span");
-            close.style.textAlign = "right";
-            close.style.textDecoration = "underline";
-            close.style.cursor = "pointer";
-            close.style.fontSize = "14px";
-            close.style.marginTop = "10px";
-            close.title = "Close this dialog";
-            close.appendChild(document.createTextNode(" close"));
-            //close.appendChild(img);
+            var title_head = document.createElement("h4");
+            title_head.appendChild(document.createTextNode("Meme Generator"));
+            title.appendChild(title_head);
+            var x = document.createElement("div");
+            x.style['text-align'] = "right";
+            x.appendChild(document.createTextNode("x"));
+            panel.appendChild(x);
             panel.appendChild(title);
-            panel.appendChild(close);
             close.onclick = function(evt) {
                 document.body.removeChild(panel);
             };
@@ -528,7 +526,8 @@ if (typeof CS == "undefined") {
             var text = document.createElement("input");
             text.id = "modifytext";
             text.type = "text";
-            text.value = "Say something about this image";
+            text.size = "50"
+            text.value = "Insert your text here to modify this image";
             div.appendChild(document.createElement("br"));
             div.appendChild(text);
             return div;

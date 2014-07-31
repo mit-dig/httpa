@@ -255,9 +255,12 @@ IC.prototype = {
                     chrome.storage.sync.set({'resource': message.resource}, function() {
                         // Notify that we saved.
                         console.log(message.resource + ' saved.');
-                });
+                    });
 
                     chrome.tabs.create({url: "audit.html"});
+                }
+                else{
+                    alert("Authentication error! Provenance Tracker says this photo is not yours.");
                 }
               }
             });
