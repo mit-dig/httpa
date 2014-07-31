@@ -78,7 +78,7 @@ var googlePlusUserLoader = (function() {
   }
 
   function getUserInfo(interactive) {
-    alert("getUserInfo");
+    //alert("getUserInfo");
     xhrWithAuth('GET',
                 'https://www.googleapis.com/plus/v1/people/me',
                 interactive,

@@ -80,13 +80,12 @@ IC.prototype = {
             }
           }
 
-
-
-
     },
+
     getServerUrl: function() {
         return IC.SERVER_URL;
     },
+
     setupEventHandler: function() {
         chrome.runtime.onStartup.addListener(function() {
             this.establishSession();
@@ -238,13 +237,28 @@ IC.prototype = {
         }
         else if (message.type == "audit"){
 
+            var loggedin_user;
+
+            chrome.storage.sync.get('user', function(data){
+                    loggedin_user = data.user.url;
+                
+            });
+
             $.ajax({
-              url: 'http://photorm.herokuapp.com/get/' + encodeURIComponent(message.resource) ,
+              url: 'http://provenance-tracker.herokuapp.com/logs_temp/' + encodeURIComponent(message.resource) ,
               // dataType: 'json',
               success: function(data) {
                 // parse you data received from server here
-                // data.count
-                alert(data);
+                //Only request the audit log if it is from the authenticated user
+                if (loggedin_user == data.meta.user){
+
+                    chrome.storage.sync.set({'resource': message.resource}, function() {
+                        // Notify that we saved.
+                        console.log(message.resource + ' saved.');
+                });
+
+                    chrome.tabs.create({url: "audit.html"});
+                }
               }
             });
 

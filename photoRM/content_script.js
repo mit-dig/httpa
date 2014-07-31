@@ -254,7 +254,9 @@ if (typeof CS == "undefined") {
                 panel.style.height = String(clientHeight / 2) + "px";
             }
         },
+
         createPreviewModify: function(panel) {
+        
             var textinput = this.createTextInput();
             panel.appendChild(textinput);
             
@@ -263,15 +265,23 @@ if (typeof CS == "undefined") {
             
             modify.onclick = function(evt) {
 
-  
-                var canvas;
-                var ctx;
+                document.body.innerHTML ='';
+                document.body.appendChild(panel);
+                
+                var canvas = document.createElement('canvas');
+                canvas.id = 'imageModifyCanvas';
+                var ctx = canvas.getContext('2d');
+
+                // var canvas;
+                // var ctx;
+
                 var x = 75;
                 var y = 50;
                 var dx = 5;
                 var dy = 3;
                 var WIDTH = 400;
                 var HEIGHT = 300;
+
                 var dragok = false,
                     text = document.getElementById('modifytext').value,
                     textLength = (text.length * 14)/2;
@@ -287,6 +297,7 @@ if (typeof CS == "undefined") {
                 }
 
                 function clear() {
+                    ctx.clearRect(0,0, imageObj.width, imageObj.height);
                     ctx.drawImage(imageObj, 0, 0);
                 }
 
@@ -302,23 +313,17 @@ if (typeof CS == "undefined") {
                     }
                 }
                 
-                document.body.innerHTML ='';
-                document.body.appendChild(panel);
                 
-                canvas = document.createElement('canvas');
-                canvas.id = 'imageModifyCanvas';
-                ctx = canvas.getContext('2d');
-                
-                imageObj.src = document.URL;
-
                 imageObj.onload = function() {
 
                     canvas.width = imageObj.width;
                     canvas.height = imageObj.height;
-
+                    
                     ctx.drawImage(imageObj, 0, 0);
                     setInterval(draw, 10);
                 };
+
+                imageObj.src = document.URL;
 
                 canvas.onmousedown = function(e){
                     if (e.pageX < x + textLength + canvas.offsetLeft && 
@@ -336,11 +341,11 @@ if (typeof CS == "undefined") {
                     dragok = false;
                     canvas.onmousemove = null;
                 }
-    
-                
+                    
                 document.body.appendChild(canvas);
                 
             };
+
 
             var setUsageRestrictions = this.createLinkDiv("Audit Resource");
             panel.appendChild(setUsageRestrictions);
@@ -353,7 +358,7 @@ if (typeof CS == "undefined") {
                 };
                 chrome.extension.sendMessage(message);
 
-            }
+            };
 
 
             var saveImage = this.createLinkDiv("Save Image");
@@ -366,7 +371,7 @@ if (typeof CS == "undefined") {
                 // Convert that back to a dataURL
                 var dataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");;
                 return dataURL.replace(/data:image\/png;base64,/, '');
-            }   
+            };   
 
             saveImage.onclick = function(evt){
 
@@ -380,7 +385,7 @@ if (typeof CS == "undefined") {
                 link.click();
 
 
-            }
+            };
 
             var uploadImage = this.createLinkDiv("Share on imgur.com");
             panel.appendChild(uploadImage);
@@ -423,8 +428,14 @@ if (typeof CS == "undefined") {
                 var post_data =  unescape(encodeURIComponent(image64));
                 xhr.send(post_data); 
 
-            }
+            };
 
+            var uploadImagePhotorm = this.createLinkDiv("Share on photorm.org");
+            panel.appendChild(uploadImagePhotorm);
+
+            uploadImagePhotorm.onclick = function (evt){
+                alert("clicked!");
+            };
 
 
             var uploadImageImagehare = this.createLinkDiv("Share on imagehare.com");
@@ -432,16 +443,17 @@ if (typeof CS == "undefined") {
 
             uploadImageImagehare.onclick = function (evt){
 
-
                 var xhr = new XMLHttpRequest();
                 
-                xhr.open('POST', 'http://localhost:8080/upload', true); 
+                xhr.open('POST', 'http://imagehare.com/upload', true); 
                 
                 xhr.setRequestHeader('usage_restrictions', 'http://usage_restrictions_abc');
                 xhr.setRequestHeader('extension', 'true');
 
                 xhr.onreadystatechange = function() {
                     if (this.readyState == 4) {
+                        alert(xhr.response);
+                        alert(xhr.response.headers['upload-complete']);
                         window.open(xhr.response);
 
                         }
@@ -464,7 +476,7 @@ if (typeof CS == "undefined") {
 
                 xhr.send(formdata); 
 
-            }
+            };
 
             
         },
@@ -472,10 +484,6 @@ if (typeof CS == "undefined") {
 
             var title = document.createElement("span");
             title.appendChild(document.createTextNode("PhotoRM Extension "));
-            //Todo: this image doesn't seem to work when in local file store
-            // var img = document.createElement("img");
-            // img.setAttribute("src", chrome.extension.getURL("images/close.png"));
-            // img.setAttribute("height", "25px");
             var close = document.createElement("span");
             close.style.textAlign = "right";
             close.style.textDecoration = "underline";
