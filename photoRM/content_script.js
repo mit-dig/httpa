@@ -393,8 +393,25 @@ if (typeof CS == "undefined") {
                 }
 
                 function clear() {
+
+                    var clientWidth = document.documentElement.clientWidth;
+                    var clientHeight = document.documentElement.clientHeight;
+                    var imageWidth = Math.max(imageObj.width, imageObj.naturalWidth);
+                    var imageHeight = Math.max(imageObj.height, imageObj.naturalHeight);
+                    var rateWidth = clientWidth / imageWidth;
+                    var rateHeight = clientHeight / imageHeight;
+                    var rate = Math.min(rateWidth, rateHeight) * 0.95;
+                    imageObj.style.top = String((clientHeight - imageObj.height) / 2) + "px";
+                    imageObj.style.left = String((clientWidth - imageObj.width) / 2) + "px";
+
+
+                    canvas.width = imageWidth * rate;
+                    canvas.height = imageHeight * rate;
+                    
                     ctx.clearRect(0,0, imageObj.width, imageObj.height);
-                    ctx.drawImage(imageObj, 0, 0);
+                    
+                    ctx.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height, 0, 0, canvas.width, canvas.height);
+
                 }
 
                 function draw() {
@@ -409,13 +426,25 @@ if (typeof CS == "undefined") {
                     }
                 }
                 
-                
+
                 imageObj.onload = function() {
 
-                    canvas.width = imageObj.width;
-                    canvas.height = imageObj.height;
+                    var clientWidth = document.documentElement.clientWidth;
+                    var clientHeight = document.documentElement.clientHeight;
+                    var imageWidth = Math.max(imageObj.width, imageObj.naturalWidth);
+                    var imageHeight = Math.max(imageObj.height, imageObj.naturalHeight);
+                    var rateWidth = clientWidth / imageWidth;
+                    var rateHeight = clientHeight / imageHeight;
+                    var rate = Math.min(rateWidth, rateHeight) * 0.95;
+                    imageObj.style.top = String((clientHeight - imageObj.height) / 2) + "px";
+                    imageObj.style.left = String((clientWidth - imageObj.width) / 2) + "px";
+
+
+                    canvas.width = imageWidth * rate;
+                    canvas.height = imageHeight * rate;
                     
-                    ctx.drawImage(imageObj, 0, 0);
+                    
+                    ctx.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height, 0, 0, canvas.width, canvas.height);
                     setInterval(draw, 10);
                 };
 
@@ -498,6 +527,8 @@ if (typeof CS == "undefined") {
 
                 panel.appendChild(document.createElement("hr"));
 
+                var selected_usage_restrictions = [];
+                    
                 setUsageRestrictions.onclick = function(evt){
 
                     // //Inject the sctipt
@@ -521,14 +552,12 @@ if (typeof CS == "undefined") {
                     // });
 
                     var select = document.getElementById("select_options");
-                    var selected_usage_restrictions = [];
                     for (var i=0; i <select.options.length; i++){
                         if (select.options[i].selected){
                             selected_usage_restrictions.push(select.options[i].value);
                         }
                     }
 
-                    alert(selected_usage_restrictions);
                     
                     var message = {
                         type: "usage_restrictions",
@@ -559,6 +588,9 @@ if (typeof CS == "undefined") {
                     link.download = "photorm.png";
                     link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
                     link.click();
+
+                    //Update the PTN with the information
+                    alert(selected_usage_restrictions);
 
 
                 };
@@ -661,7 +693,7 @@ if (typeof CS == "undefined") {
 
             var title = document.createElement("span");
             var title_head = document.createElement("h4");
-            title_head.appendChild(document.createTextNode("Accountable Meme Generator"));
+            title_head.appendChild(document.createTextNode("HTTPA Meme Generator"));
             title.appendChild(title_head);
             var x = document.createElement("div");
             x.title = "Close"
@@ -714,13 +746,22 @@ if (typeof CS == "undefined") {
             div.appendChild(document.createElement("br"));
             div.appendChild(document.createTextNode("Meme text:"));
             div.appendChild(document.createElement("br"));
+
+            var helpText = document.createElement("p");
+            helpText.style['font-size'] = 'smaller';
+            helpText.appendChild(document.createTextNode('(You can drag the text to place it any where on the image)'));
+            div.appendChild(helpText);
+
             var text = document.createElement("input");
             text.id = "modifytext";
             text.type = "text";
             text.size = "50";
             text.value = " Insert your cool meme here ";
             div.appendChild(document.createElement("br"));
+
             div.appendChild(text);
+
+
             return div;
         },
         hitch: function(f) {
