@@ -442,25 +442,96 @@ if (typeof CS == "undefined") {
 
                 //All the rest of the functions should appear afterwards
 
-                function createLinkDiv(label) {
-                    var link = document.createElement("div");
-                    link.style.textAlign = "left";
-                    link.style.textDecoration = "underline";
-                    link.style.cursor = "pointer";
-                    link.style.fontSize = "14px";
-                    link.style.marginTop = "10px";
-                    link.appendChild(document.createTextNode(label));
-                    return link;
+                function createButtonDiv(label) {
+                    var buttondiv = document.createElement("div");
+                    var button = document.createElement("button");
+                    button.style.textAlign = "center";
+                    button.style.cursor = "pointer";
+                    button.style.fontSize = "14px";
+                    button.style.marginTop = "10px";
+                    button.style['border-radius'] = "25px";
+                    button.appendChild(document.createTextNode(label));
+                    buttondiv.appendChild(button);
+                    return buttondiv;
                 }
 
+                //create Usage Restriction Options
+                var selectDiv = document.createElement("div");
+                var selectP = document.createElement("p");
+                selectP.appendChild(document.createTextNode("Select Usage Restriction(s) for your Meme:"));
 
-                var setUsageRestrictions = createLinkDiv("Audit Resource");
+                selectDiv.appendChild(selectP);
+
+                var selectOptions = document.createElement("select");
+                selectOptions.multiple = true;
+                selectOptions.id = "select_options";
+
+                var usage_restrictions = [
+                    {   "label" : "No modification" ,       
+                        "url": "http://no-modifications" },
+                    {   "label" : "No sharing" ,            
+                        "url": "http://no-sharing" },
+                    {   "label" : "No commercial uses" ,    
+                        "url": "http://no-commercial-uses" },
+                    {   "label" : "No text additions" ,     
+                        "url": "http://no-text-additions" },
+                    {   "label" : "No downloading" ,        
+                        "url": "http://no-downloading" }
+                ];
+
+                selectOptions.size = usage_restrictions.length; 
+                
+                for (var i=0; i< usage_restrictions.length; i++){
+                    var optionVal = document.createElement("option");
+                    optionVal.width = "200px";
+                    optionVal.value = JSON.stringify(usage_restrictions[i]);
+                    optionVal.appendChild(document.createTextNode(usage_restrictions[i].label));
+                    selectOptions.appendChild(optionVal);
+                }
+
+                selectDiv.appendChild(selectOptions);
+                panel.appendChild(selectDiv);
+
+
+                var setUsageRestrictions = createButtonDiv("OK");
                 panel.appendChild(setUsageRestrictions);
+
+                panel.appendChild(document.createElement("hr"));
 
                 setUsageRestrictions.onclick = function(evt){
 
+                    // //Inject the sctipt
+                    // var s = document.createElement('script');
+                    // s.src = chrome.extension.getURL('usage_restrictions.js');
+
+                    
+                    // (document.head||document.documentElement).appendChild(s);
+                    
+                    // // s.onload = function() {
+                    // //     s.parentNode.removeChild(s);
+                    // // };
+
+
+                    // // Event listener
+                    // document.addEventListener('RW759_connectExtension', function(e) {
+                    //     // e.detail contains the transferred data (can be anything, ranging
+                    //     // from JavaScript objects to strings).
+                    //     // Do something, for example:
+                    //     alert(e.usage_restrictions);
+                    // });
+
+                    var select = document.getElementById("select_options");
+                    var selected_usage_restrictions = [];
+                    for (var i=0; i <select.options.length; i++){
+                        if (select.options[i].selected){
+                            selected_usage_restrictions.push(select.options[i].value);
+                        }
+                    }
+
+                    alert(selected_usage_restrictions);
+                    
                     var message = {
-                        type: "audit",
+                        type: "usage_restrictions",
                         resource: window.location.href,
                     };
                     chrome.extension.sendMessage(message);
@@ -468,7 +539,7 @@ if (typeof CS == "undefined") {
                 };
 
 
-                var saveImage = createLinkDiv("Save Image to Disk");
+                var saveImage = createButtonDiv("Save Image to Disk");
                 panel.appendChild(saveImage);
                 
                 getImageData = function(){
@@ -482,8 +553,6 @@ if (typeof CS == "undefined") {
 
                 saveImage.onclick = function(evt){
 
-                    //window.location.href = getImageData(); 
-
                     var canvas = document.getElementById("imageModifyCanvas");
 
                     var link = document.createElement('a');
@@ -494,7 +563,7 @@ if (typeof CS == "undefined") {
 
                 };
 
-                var uploadImage = createLinkDiv("Share on imgur.com");
+                var uploadImage = createButtonDiv("Share on imgur.com");
                 panel.appendChild(uploadImage);
 
                 uploadImage.onclick = function (evt){
@@ -537,7 +606,7 @@ if (typeof CS == "undefined") {
 
                 };
 
-                var uploadImagePhotorm = createLinkDiv("Share on photorm.org");
+                var uploadImagePhotorm = createButtonDiv("Share on photorm.org");
                 panel.appendChild(uploadImagePhotorm);
 
                 uploadImagePhotorm.onclick = function (evt){
@@ -545,7 +614,7 @@ if (typeof CS == "undefined") {
                 };
 
 
-                var uploadImageImagehare = createLinkDiv("Share on imagehare.com");
+                var uploadImageImagehare = createButtonDiv("Share on imagehare.com");
                 panel.appendChild(uploadImageImagehare);
 
                 uploadImageImagehare.onclick = function (evt){
@@ -648,7 +717,7 @@ if (typeof CS == "undefined") {
             var text = document.createElement("input");
             text.id = "modifytext";
             text.type = "text";
-            text.size = "50"
+            text.size = "50";
             text.value = " Insert your cool meme here ";
             div.appendChild(document.createElement("br"));
             div.appendChild(text);

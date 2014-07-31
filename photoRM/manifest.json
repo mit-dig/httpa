@@ -43,7 +43,7 @@
    "permissions": [ "tabs", "http://*/*", "https://*/*", "contextMenus", "bookmarks", "identity", "identity.email", "storage" ],
    "short_name": "HTTPA PhotoRM",
    "version": "0.0.2",
-   "web_accessible_resources": [ "options.html", "audit.html" ],
+   "web_accessible_resources": [ "options.html", "audit.html", "usage_restrictions.js" ],
    "oauth2": {
     "client_id": "143236281988-jbg6h3kiu93kvrj20a6g1pt2slsu129s.apps.googleusercontent.com",
     "scopes": [
