@@ -154,13 +154,104 @@ if (typeof CS == "undefined") {
             chrome.extension.sendMessage(message);
         },
         previewImages: function(images, position, tabId) {
-            var panel = this.createPreviewPanel(position);
-            document.body.appendChild(panel);
-            this.createPreviewClose(panel);
-            //this.createPreviewImages(images, panel, tabId);
-            this.createPreviewModify(panel);
-            this.createPreviewOption(panel);
+            //Only show the preview panel if the document URL displays an image
+            if (document.URL.match(/\.(jpeg|jpg|gif|png)$/) != null){
+                var panel = this.createPreviewPanel(position);
+                document.body.appendChild(panel);
+                this.createPreviewClose(panel);
+                //this.createPreviewOption(panel);
+                this.createPreviewImages(images, panel, tabId);
+                this.createImageInfo(panel);
+
+                this.createAuditResource(panel);
+                this.createSeperator(panel);
+
+                this.createPreviewModify(panel);
+                this.createSeperator(panel);
+
+            }
         },
+
+        createSeperator : function(panel){
+            var hr = document.createElement("hr");
+            panel.appendChild(hr);
+
+        },
+        createImageInfo : function(panel){
+
+            //Include "meta" information including usage restrictions about this image
+            var meta = document.createElement("div");
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', "http://provenance-tracker.herokuapp.com/logs_temp/" + encodeURIComponent(document.URL), true); 
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    var response = JSON.parse(xhr.response);
+          
+                    // Check for error.
+                    if (response.error) {
+                        alert('Error: ' + response.error.message);
+                        return;
+                    }
+
+                    var user_div =  document.createElement("div");
+                    user_div.style['font-size'] = "smaller";
+                    var user_p = document.createElement("p");
+                    user_p.appendChild(document.createTextNode("Your are modifying image by "));
+                    var user_a = document.createElement("a");
+                    user_a.href = response.meta.user;
+                    user_a.appendChild(document.createTextNode(response.meta.name)); //Todo if possible append name
+                    user_p.appendChild(user_a);
+
+
+                    user_div.appendChild(user_p);
+
+                    if (response.meta.usage_restrictions.length > 0){
+                        
+                        var ur_div = document.createElement("div");
+                        ur_div.appendChild(document.createTextNode("Usage Restrictions: "));
+                        ur_div.appendChild(document.createElement("br"));
+                        
+                        for (var i=0; i<response.meta.usage_restrictions.length; i++){
+                            var ur_a = document.createElement("a");
+                            ur_a.href = response.meta.usage_restrictions[i].url;
+                            ur_a.appendChild(document.createTextNode(response.meta.usage_restrictions[i].label));
+                            ur_div.appendChild(ur_a);
+                            ur_div.appendChild(document.createElement("br"));
+                        }
+
+                        user_div.appendChild(ur_div);
+
+                    }
+
+
+                    meta.appendChild(user_div);
+                    
+                }
+            };
+            xhr.send();
+            panel.appendChild(meta);
+        },
+
+        createAuditResource : function(panel){
+
+            var auditResource = this.createButtonDiv("Audit Resource");
+            
+            auditResource.onclick = function(evt){
+
+                var message = {
+                    type: "audit",
+                    resource: window.location.href,
+                };
+                chrome.extension.sendMessage(message);
+
+            };
+
+            panel.appendChild(auditResource);
+
+
+        },
+
         createPreviewPanel: function(position) {
             var panel = document.getElementById("ics_preview_panel");
             if (panel) {
@@ -179,7 +270,8 @@ if (typeof CS == "undefined") {
                 panel.style.color = "black";
                 panel.style['font-family'] = "Arial,Helvetica,sans-serif";
             
-                panel.style.width = "250px";
+                panel.style.width = "300px";
+                panel.style.height = document.innerHeight;
                 if (position.indexOf("top") != -1) {
                     panel.style.top = 0;
                 }
@@ -203,6 +295,7 @@ if (typeof CS == "undefined") {
             return panel;
         },
         createPreviewImages: function(images, panel, tabId) {
+
             var failedImageCount = 0;
             for (var i = 0; i < images.length; i++) {
                 var img = document.createElement("img");
@@ -234,6 +327,7 @@ if (typeof CS == "undefined") {
                         this.adjustPreviewPanelHeight(panel);
                     });
                 }
+
                 panel.appendChild(img);
             }
         },
@@ -253,7 +347,7 @@ if (typeof CS == "undefined") {
         adjustPreviewPanelHeight: function(panel) {
             var clientHeight = document.documentElement.clientHeight;
             if (panel.clientHeight > (clientHeight / 2)) {
-                panel.style.height = String(clientHeight / 2) + "px";
+//                panel.style.height = String(clientHeight / 2) + "px";
             }
         },
 
@@ -262,7 +356,7 @@ if (typeof CS == "undefined") {
             var textinput = this.createTextInput();
             panel.appendChild(textinput);
             
-            var modify = this.createLinkDiv("Modify");
+            var modify = this.createButtonDiv("Modify Image");
             panel.appendChild(modify);
             
             modify.onclick = function(evt) {
@@ -345,155 +439,170 @@ if (typeof CS == "undefined") {
                 }
                     
                 document.body.appendChild(canvas);
-                
-            };
 
+                //All the rest of the functions should appear afterwards
 
-            var setUsageRestrictions = this.createLinkDiv("Audit Resource");
-            panel.appendChild(setUsageRestrictions);
-
-            setUsageRestrictions.onclick = function(evt){
-
-                var message = {
-                    type: "audit",
-                    resource: window.location.href,
-                };
-                chrome.extension.sendMessage(message);
-
-            };
-
-
-            var saveImage = this.createLinkDiv("Save Image");
-            panel.appendChild(saveImage);
-            
-            getImageData = function(){
-                var canvas = document.getElementById("imageModifyCanvas");
-
-
-                // Convert that back to a dataURL
-                var dataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");;
-                return dataURL.replace(/data:image\/png;base64,/, '');
-            };   
-
-            saveImage.onclick = function(evt){
-
-                //window.location.href = getImageData(); 
-
-                var canvas = document.getElementById("imageModifyCanvas");
-
-                var link = document.createElement('a');
-                link.download = "photorm.png";
-                link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
-                link.click();
-
-
-            };
-
-            var uploadImage = this.createLinkDiv("Share on imgur.com");
-            panel.appendChild(uploadImage);
-
-            uploadImage.onclick = function (evt){
-
-                var API_KEY = 'd702179326fa144';
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://api.imgur.com/2/upload.json?key=' + API_KEY, true); 
-                xhr.setRequestHeader('Cache-Control', 'no-cache');
-                xhr.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        var response = JSON.parse(xhr.response);
-              
-                        // Check for error.
-                        if (response.error) {
-                            alert('Error: ' + response.error.message);
-                            return;
-                        }
-              
-                        // Retrieve the image url.
-                        alert('Image URL: ' + response.upload.links.original);
-
-                        var message = {
-                            type: "updatePTN",
-                            original: window.location.href,
-                            derivative: response.upload.links.original,
-                        };
-                        chrome.extension.sendMessage(message);
-
-                        }
-                };
-      
-                // Get the base64 image using HTML5 Canvas.
-                var canvas = document.getElementById("imageModifyCanvas");
-
-                var image64 = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
-      
-                // Properly escape the contents of the image. And post it.
-                var post_data =  unescape(encodeURIComponent(image64));
-                xhr.send(post_data); 
-
-            };
-
-            var uploadImagePhotorm = this.createLinkDiv("Share on photorm.org");
-            panel.appendChild(uploadImagePhotorm);
-
-            uploadImagePhotorm.onclick = function (evt){
-                alert("clicked!");
-            };
-
-
-            var uploadImageImagehare = this.createLinkDiv("Share on imagehare.com");
-            panel.appendChild(uploadImageImagehare);
-
-            uploadImageImagehare.onclick = function (evt){
-
-                var xhr = new XMLHttpRequest();
-                
-                xhr.open('POST', 'http://imagehare.com/upload', true); 
-                
-                xhr.setRequestHeader('usage_restrictions', 'http://usage_restrictions_abc');
-                xhr.setRequestHeader('extension', 'true');
-
-                xhr.onreadystatechange = function() {
-                    if (this.readyState == 4) {
-                        alert(xhr.response);
-                        alert(xhr.response.headers['upload-complete']);
-                        window.open(xhr.response);
-
-                        }
-                };
-      
-                // Get the base64 image using HTML5 Canvas.
-                var canvas = document.getElementById("imageModifyCanvas");
-
-                var image64 = canvas.toDataURL('image/png', 0.9).split(',')[1];
-
-                var blobBin = atob(image64);
-                var array = [];
-                for(var i = 0; i < blobBin.length; i++) {
-                    array.push(blobBin.charCodeAt(i));
+                function createLinkDiv(label) {
+                    var link = document.createElement("div");
+                    link.style.textAlign = "left";
+                    link.style.textDecoration = "underline";
+                    link.style.cursor = "pointer";
+                    link.style.fontSize = "14px";
+                    link.style.marginTop = "10px";
+                    link.appendChild(document.createTextNode(label));
+                    return link;
                 }
-                var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
 
-                var formdata = new FormData();
-                formdata.append("upload", file);
 
-                xhr.send(formdata); 
+                var setUsageRestrictions = createLinkDiv("Audit Resource");
+                panel.appendChild(setUsageRestrictions);
 
+                setUsageRestrictions.onclick = function(evt){
+
+                    var message = {
+                        type: "audit",
+                        resource: window.location.href,
+                    };
+                    chrome.extension.sendMessage(message);
+
+                };
+
+
+                var saveImage = createLinkDiv("Save Image to Disk");
+                panel.appendChild(saveImage);
+                
+                getImageData = function(){
+                    var canvas = document.getElementById("imageModifyCanvas");
+
+
+                    // Convert that back to a dataURL
+                    var dataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");;
+                    return dataURL.replace(/data:image\/png;base64,/, '');
+                };   
+
+                saveImage.onclick = function(evt){
+
+                    //window.location.href = getImageData(); 
+
+                    var canvas = document.getElementById("imageModifyCanvas");
+
+                    var link = document.createElement('a');
+                    link.download = "photorm.png";
+                    link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
+                    link.click();
+
+
+                };
+
+                var uploadImage = createLinkDiv("Share on imgur.com");
+                panel.appendChild(uploadImage);
+
+                uploadImage.onclick = function (evt){
+
+                    var API_KEY = 'd702179326fa144';
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'http://api.imgur.com/2/upload.json?key=' + API_KEY, true); 
+                    xhr.setRequestHeader('Cache-Control', 'no-cache');
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            var response = JSON.parse(xhr.response);
+                  
+                            // Check for error.
+                            if (response.error) {
+                                alert('Error: ' + response.error.message);
+                                return;
+                            }
+                  
+                            // Retrieve the image url.
+                            alert('Image URL: ' + response.upload.links.original);
+
+                            var message = {
+                                type: "updatePTN",
+                                original: window.location.href,
+                                derivative: response.upload.links.original,
+                            };
+                            chrome.extension.sendMessage(message);
+
+                            }
+                    };
+          
+                    // Get the base64 image using HTML5 Canvas.
+                    var canvas = document.getElementById("imageModifyCanvas");
+
+                    var image64 = canvas.toDataURL('image/jpeg', 0.9).split(',')[1];
+          
+                    // Properly escape the contents of the image. And post it.
+                    var post_data =  unescape(encodeURIComponent(image64));
+                    xhr.send(post_data); 
+
+                };
+
+                var uploadImagePhotorm = createLinkDiv("Share on photorm.org");
+                panel.appendChild(uploadImagePhotorm);
+
+                uploadImagePhotorm.onclick = function (evt){
+                    alert("clicked!");
+                };
+
+
+                var uploadImageImagehare = createLinkDiv("Share on imagehare.com");
+                panel.appendChild(uploadImageImagehare);
+
+                uploadImageImagehare.onclick = function (evt){
+
+                    var xhr = new XMLHttpRequest();
+                    
+                    xhr.open('POST', 'http://imagehare.com/upload', true); 
+                    
+                    xhr.setRequestHeader('usage_restrictions', 'http://usage_restrictions_abc');
+                    xhr.setRequestHeader('extension', 'true');
+
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            alert(xhr.response);
+                            alert(xhr.response.headers['upload-complete']);
+                            window.open(xhr.response);
+
+                            }
+                    };
+          
+                    // Get the base64 image using HTML5 Canvas.
+                    var canvas = document.getElementById("imageModifyCanvas");
+
+                    var image64 = canvas.toDataURL('image/png', 0.9).split(',')[1];
+
+                    var blobBin = atob(image64);
+                    var array = [];
+                    for(var i = 0; i < blobBin.length; i++) {
+                        array.push(blobBin.charCodeAt(i));
+                    }
+                    var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
+
+                    var formdata = new FormData();
+                    formdata.append("upload", file);
+
+                    xhr.send(formdata); 
+
+                };
+                
             };
-
             
         },
         createPreviewClose: function(panel) {
 
             var title = document.createElement("span");
             var title_head = document.createElement("h4");
-            title_head.appendChild(document.createTextNode("Meme Generator"));
+            title_head.appendChild(document.createTextNode("Accountable Meme Generator"));
             title.appendChild(title_head);
             var x = document.createElement("div");
+            x.title = "Close"
             x.style['text-align'] = "right";
-            x.appendChild(document.createTextNode("x"));
+            x.style.textDecoration = "underline";
+                    
+            x.appendChild(document.createTextNode(" X "));
             panel.appendChild(x);
             panel.appendChild(title);
-            close.onclick = function(evt) {
+            x.onclick = function(evt) {
                 document.body.removeChild(panel);
             };
         },
@@ -521,13 +630,26 @@ if (typeof CS == "undefined") {
             link.appendChild(document.createTextNode(label));
             return link;
         }, 
+        createButtonDiv: function(label) {
+            var button = document.createElement("button");
+            button.style.textAlign = "center";
+            button.style.cursor = "pointer";
+            button.style.fontSize = "14px";
+            button.style.marginTop = "10px";
+            button.style['border-radius'] = "25px";
+            button.appendChild(document.createTextNode(label));
+            return button;
+        }, 
         createTextInput: function() {
             var div = document.createElement("div");
+            div.appendChild(document.createElement("br"));
+            div.appendChild(document.createTextNode("Meme text:"));
+            div.appendChild(document.createElement("br"));
             var text = document.createElement("input");
             text.id = "modifytext";
             text.type = "text";
             text.size = "50"
-            text.value = "Insert your text here to modify this image";
+            text.value = " Insert your cool meme here ";
             div.appendChild(document.createElement("br"));
             div.appendChild(text);
             return div;

@@ -29,7 +29,7 @@
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwD24+WOouqtMi2IK6HPS99FtZCtnO8R0i13kvdAWjnIrrcE4SYVEH/LO2cZjVUOL9mj2K+w/YCzjT8lQ3nNDIxrjQfH6IiTADmC6l3wyJUdpGlv0qr2eh7ypGiuv7/KJ0YgciHCPxTbiN6TN1e1Gug5b43SnaORX8hM2kdO1aAJZCkds+KF7re3BK3g3VckR8ytyQVzKMvZfBfIc49zi1evy9mixf3p9/MlCj45lwjJUbCT/1kmikx+fKJhqbZTFCsP/V7FXkc+MaOXOeu/GLH5OTENIbVEa6srqhbMTOBzZSLAi0jjphMqCO3CeRNHazHGi/hWIXAhZ/C9g/L1wOQIDAQAB",
 
    "manifest_version": 2,
-   "name": "Accountable Simple Photo-Editing Tool",
+   "name": "Accountable Meme Generator",
    "optional_permissions": [ "notifications", "downloads" ],
    "options_page": "options.html",
    "page_action": {

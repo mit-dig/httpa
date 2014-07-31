@@ -2,6 +2,20 @@ Issues with the Image Collector component
 ==========================================
 * Some small images do not get picked up by the background script.
 
+
+Sending the post data
+======================
+
+                      _id:req.user._json.link, 
+                      email: req.user._json.email, 
+                      name: req.user.displayName, 
+                      joined: currentDate}] ;
+
+
+In the extension for post, remember to send this header:
+req.headers['user_email']  like how you send user_name
+
+
 Obtaining the Logged in user data
 ===================================
 

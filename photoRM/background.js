@@ -75,8 +75,7 @@ IC.prototype = {
 
               //alert(user_info.url);
             } else {
-                alert(JSON.stringify(error));
-                alert(status);
+                alert("Error: " + JSON.stringify(error));
             }
           }
 
