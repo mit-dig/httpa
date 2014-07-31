@@ -358,8 +358,11 @@ if (typeof CS == "undefined") {
             
             var modify = this.createButtonDiv("Modify Image");
             panel.appendChild(modify);
+
+            var modify_clicked = false;
             
             modify.onclick = function(evt) {
+
 
                 document.body.innerHTML ='';
                 document.body.appendChild(panel);
@@ -519,57 +522,38 @@ if (typeof CS == "undefined") {
                 }
 
                 selectDiv.appendChild(selectOptions);
-                panel.appendChild(selectDiv);
-
+                
 
                 var setUsageRestrictions = createButtonDiv("OK");
-                panel.appendChild(setUsageRestrictions);
-
-                panel.appendChild(document.createElement("hr"));
-
+                
                 var selected_usage_restrictions = [];
                     
                 setUsageRestrictions.onclick = function(evt){
 
-                    // //Inject the sctipt
-                    // var s = document.createElement('script');
-                    // s.src = chrome.extension.getURL('usage_restrictions.js');
-
-                    
-                    // (document.head||document.documentElement).appendChild(s);
-                    
-                    // // s.onload = function() {
-                    // //     s.parentNode.removeChild(s);
-                    // // };
-
-
-                    // // Event listener
-                    // document.addEventListener('RW759_connectExtension', function(e) {
-                    //     // e.detail contains the transferred data (can be anything, ranging
-                    //     // from JavaScript objects to strings).
-                    //     // Do something, for example:
-                    //     alert(e.usage_restrictions);
-                    // });
-
                     var select = document.getElementById("select_options");
                     for (var i=0; i <select.options.length; i++){
                         if (select.options[i].selected){
-                            selected_usage_restrictions.push(select.options[i].value);
+                            selected_usage_restrictions.push(JSON.parse(select.options[i].value));
                         }
                     }
 
-                    
-                    var message = {
-                        type: "usage_restrictions",
-                        resource: window.location.href,
-                    };
-                    chrome.extension.sendMessage(message);
+                    alert("Noted your usage restrictions for this modified image.");
 
                 };
 
+                
+                //Ask from the user if they would like to give a new name
+                var modified_name_div = document.createElement("div");
+                modified_name_div.appendChild(document.createTextNode("Enter New Image Name: "));
+                var modified_name_input = document.createElement("input");
+                modified_name_input.id = "modified_name_input";
+                modified_name_input.type = "text";
+                modified_name_input.size = "30";
+                modified_name_input.value = "modified_" + document.URL.replace(/^.*[\\\/]/, '');
+                modified_name_div.appendChild(modified_name_input);
+                
 
-                var saveImage = createButtonDiv("Save Image to Disk");
-                panel.appendChild(saveImage);
+                var saveImage = createButtonDiv("Download modified image");
                 
                 getImageData = function(){
                     var canvas = document.getElementById("imageModifyCanvas");
@@ -582,22 +566,54 @@ if (typeof CS == "undefined") {
 
                 saveImage.onclick = function(evt){
 
+                    if (selected_usage_restrictions.length == 0){
+                        console.log('No usage restrictions selected');
+                    }
+
                     var canvas = document.getElementById("imageModifyCanvas");
 
+
                     var link = document.createElement('a');
-                    link.download = "photorm.png";
+                    link.download = document.getElementById('modified_name_input').value;
                     link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
                     link.click();
 
+
                     //Update the PTN with the information
-                    alert(selected_usage_restrictions);
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('PUT', "http://provenance-tracker.herokuapp.com/logs_temp/modify-download/" + encodeURIComponent(document.URL), true); 
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            var response = JSON.parse(xhr.response);
+                  
+                            // Check for error.
+                            if (response.error) {
+                                alert('Error: ' + response.error.message);
+                                return;
+                            }
+                        }
+                    };
+
+                    chrome.storage.sync.get('user', function(data){
+                        
+                        var data = {
+                            "user" : data.user.url,
+                            "name" : data.user.displayName,
+                            "derivation" : document.getElementById('modified_name_input').value,
+                            "usage_restrictions" : selected_usage_restrictions
+
+                        };
+                        xhr.send(JSON.stringify(data));
+
+                    });
+
 
 
                 };
 
                 var uploadImage = createButtonDiv("Share on imgur.com");
-                panel.appendChild(uploadImage);
-
+                
                 uploadImage.onclick = function (evt){
 
                     var API_KEY = 'd702179326fa144';
@@ -639,16 +655,14 @@ if (typeof CS == "undefined") {
                 };
 
                 var uploadImagePhotorm = createButtonDiv("Share on photorm.org");
-                panel.appendChild(uploadImagePhotorm);
-
+                
                 uploadImagePhotorm.onclick = function (evt){
                     alert("clicked!");
                 };
 
 
                 var uploadImageImagehare = createButtonDiv("Share on imagehare.com");
-                panel.appendChild(uploadImageImagehare);
-
+                
                 uploadImageImagehare.onclick = function (evt){
 
                     var xhr = new XMLHttpRequest();
@@ -686,23 +700,42 @@ if (typeof CS == "undefined") {
 
                 };
                 
+                if (!modify_clicked){
+                    panel.appendChild(selectDiv);
+                    panel.appendChild(setUsageRestrictions);
+                    panel.appendChild(document.createElement("br"));
+                    panel.appendChild(modified_name_div);
+                    panel.appendChild(document.createElement("hr"));
+                    panel.appendChild(saveImage);
+                    panel.appendChild(uploadImage);
+                    panel.appendChild(uploadImagePhotorm);
+                    panel.appendChild(uploadImageImagehare);
+
+                }
+                modify_clicked = true;
+                
             };
+
+
             
         },
         createPreviewClose: function(panel) {
 
-            var title = document.createElement("span");
-            var title_head = document.createElement("h4");
+            var title = document.createElement("div");
+            var title_head = document.createElement("b");
             title_head.appendChild(document.createTextNode("HTTPA Meme Generator"));
+            title_head.style.float = "left";
             title.appendChild(title_head);
-            var x = document.createElement("div");
+            var x = document.createElement("span");
             x.title = "Close"
             x.style['text-align'] = "right";
+            x.style.float = "right";
             x.style.textDecoration = "underline";
                     
             x.appendChild(document.createTextNode(" X "));
-            panel.appendChild(x);
             panel.appendChild(title);
+            panel.appendChild(x);
+            panel.appendChild(document.createElement("br"));
             x.onclick = function(evt) {
                 document.body.removeChild(panel);
             };
@@ -744,7 +777,7 @@ if (typeof CS == "undefined") {
         createTextInput: function() {
             var div = document.createElement("div");
             div.appendChild(document.createElement("br"));
-            div.appendChild(document.createTextNode("Meme text:"));
+            div.appendChild(document.createTextNode("Meme Text:"));
             div.appendChild(document.createElement("br"));
 
             var helpText = document.createElement("p");
