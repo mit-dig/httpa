@@ -396,9 +396,17 @@ if (typeof CS == "undefined") {
                 
 
                 function rect(x,y,w,h) {
-                    ctx.fillStyle = "#FF0000";
-                    ctx.font = "bold 16px Arial";
+                    ctx.fillStyle = "#000000";
+                    ctx.strokeStyle =  "#FFFFFF";
+                    ctx.lineWidth = 5;
+
+                    ctx.font = "50px Impact, Charcoal, sans-serif";
+                    
+                    ctx.strokeText(text,x, y);
                     ctx.fillText(text,x, y);
+                    
+                    ctx.fill();
+                    ctx.stroke();
                 
                 }
 
@@ -847,7 +855,7 @@ if (typeof CS == "undefined") {
             text.id = "modifytext";
             text.type = "text";
             text.size = "50";
-            text.value = " Insert your cool meme here ";
+            text.value = " Please can I haz my own meme? ";
             div.appendChild(document.createElement("br"));
 
             div.appendChild(text);
