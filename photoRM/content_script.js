@@ -206,6 +206,8 @@ if (typeof CS == "undefined") {
 
                     user_div.appendChild(user_p);
 
+                    //console.log(typeof(response.meta.usage_restrictions)); <-- string!, should be array object
+
                     if (response.meta.usage_restrictions.length > 0){
                         
                         var ur_div = document.createElement("div");
@@ -511,6 +513,7 @@ if (typeof CS == "undefined") {
                         "url": "http://no-downloading" }
                 ];
 
+                
                 selectOptions.size = usage_restrictions.length; 
                 
                 for (var i=0; i< usage_restrictions.length; i++){
@@ -597,6 +600,7 @@ if (typeof CS == "undefined") {
 
                     chrome.storage.sync.get('user', function(data){
                         
+
                         var data = {
                             //sadly no email
                             "user" : data.user.url,
@@ -605,7 +609,9 @@ if (typeof CS == "undefined") {
                             "usage_restrictions" : selected_usage_restrictions
 
                         };
+                        alert(JSON.stringify(data));
                         xhr.send(JSON.stringify(data));
+                        //xhr.send(data);
 
                     });
 
@@ -620,7 +626,8 @@ if (typeof CS == "undefined") {
                     ptn_xhr.setRequestHeader('Content-Type', 'application/json');
                     ptn_xhr.onreadystatechange = function() {
                         if (this.readyState == 4) {
-                            var response = JSON.parse(xhr.response);
+//                            var response = JSON.parse(ptn_xhr.response);
+                            var response = ptn_xhr.response;
                   
                             // Check for error.
                             if (response.error) {
@@ -670,6 +677,8 @@ if (typeof CS == "undefined") {
                         alert("Your image is at "+ derivative);
 
                         postToPTN(derivative);
+
+                        
                     }
                     xhr.setRequestHeader('Authorization', 'Client-ID d702179326fa144');
 
@@ -684,7 +693,7 @@ if (typeof CS == "undefined") {
                     
                     xhr.open('POST', server_url, true); 
                     
-                    xhr.setRequestHeader('usage_restrictions', selected_usage_restrictions);
+                    xhr.setRequestHeader('usage_restrictions', JSON.stringify(selected_usage_restrictions));
                     xhr.setRequestHeader('extension', 'true');
 
                     xhr.onreadystatechange = function() {

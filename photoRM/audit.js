@@ -13,11 +13,6 @@ $(function() {
 
 	  			for (var i=0; i< data.length; i++){
 	  				
-	  				var time_p = $(document.createElement('p'));
-	  				time_p.append(data[i].time);
-					$( "#content" ).append(time_p);
-
-	  				
 	  				var user_span = document.createElement('span');
 					user_span.appendChild(document.createTextNode(data[i].name));
 	  				user_span.appendChild(document.createTextNode(" by "));
@@ -30,23 +25,9 @@ $(function() {
 					user_a.appendChild(document.createTextNode(data[i].details.name + " "));
 				 	$( "#content" ).append(user_a);
 
-				 	
-					var question_a = document.createElement('a');
-					question_a.href = "mailto:"+data[i].details.email;
-					question_a.target = "_blank";
-
-					var question_button = document.createElement('button');
-					question_button.class = "btn btn-default";
-					question_button.appendChild(document.createTextNode("?"));
-
-					question_a.appendChild(question_button);
-
-					$( "#content" ).append(question_a);
-
-					if (data[i].name == "download" || data[i].name == "share"){
+				 	if (data[i].name == "download" || data[i].name == "share"){
 						
-						$( "#content" ).append(document.createElement("br"));
-						$( "#content" ).append(document.createTextNode("As "));
+						$( "#content" ).append(document.createTextNode(" as "));
 						var derivative_a = document.createElement("a");
 						
 						if (data[i].derivative == undefined){
@@ -59,15 +40,32 @@ $(function() {
 						
 						$( "#content" ).append(derivative_a);
 						
-						$( "#content" ).append(document.createElement("br"));
+						var time_p = $(document.createElement('span'));
+		  				time_p.append(document.createTextNode(" at " + data[i].time + " "));
+						$( "#content" ).append(time_p);
+
+
+						var question_a = document.createElement('a');
+						question_a.href = "mailto:"+data[i].details.email;
+						question_a.target = "_blank";
+
+						var question_button = document.createElement('button');
+						question_button.class = "btn btn-default";
+						question_button.appendChild(document.createTextNode("?"));
+
+						question_a.appendChild(question_button);
+
+						$( "#content" ).append(question_a);
 
 						
-						 var usage_restrictions = data[i].details.usage_restrictions;
+						var usage_restrictions = data[i].details.usage_restrictions;
 
-						 
-						 if (usage_restrictions.length > 0){
+						
+						$( "#content" ).append(document.createElement("br"));
 
-						  	$( "#content" ).append(document.createTextNode("With these usage restrictions:"));
+						if (usage_restrictions.length > 0){
+
+						  	$( "#content" ).append(document.createTextNode(" with the following usage restriction(s):"));
 						
 							var usage_restrictions_list = document.createElement("ul");
 							
@@ -84,11 +82,12 @@ $(function() {
 						 	}
 							$( "#content" ).append(usage_restrictions_list);
 
-						 }
+						}
 
 						 	
 					 }
 
+					
 					$( "#content" ).append(document.createElement('hr'));
 
 	  			}
