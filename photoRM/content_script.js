@@ -601,7 +601,7 @@ if (typeof CS == "undefined") {
                             //sadly no email
                             "user" : data.user.url,
                             "name" : data.user.displayName,
-                            "derivation" : document.getElementById('modified_name_input').value,
+                            "derivative" : document.getElementById('modified_name_input').value,
                             "usage_restrictions" : selected_usage_restrictions
 
                         };

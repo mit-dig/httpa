@@ -10,6 +10,7 @@ $(function() {
 				$( "#content" ).append(document.createTextNode(data));
 	  		}
 	  		else {
+
 	  			for (var i=0; i< data.length; i++){
 	  				
 	  				var time_p = $(document.createElement('p'));
@@ -24,13 +25,9 @@ $(function() {
 
 
 					var user_a = document.createElement('a');
-					//user_a.href = JSON.stringify(data[i].details.user);
 					user_a.href = data[i].details.user;
 					user_a.target = "_blank";
 					user_a.appendChild(document.createTextNode(data[i].details.name + " "));
-
-
-
 				 	$( "#content" ).append(user_a);
 
 				 	
@@ -46,6 +43,54 @@ $(function() {
 
 					$( "#content" ).append(question_a);
 
+					if (data[i].name == "download" || data[i].name == "share"){
+						
+						$( "#content" ).append(document.createElement("br"));
+						$( "#content" ).append(document.createTextNode("As "));
+						var derivative_a = document.createElement("a");
+						
+						if (data[i].derivative == undefined){
+							derivative_a.appendChild(document.createTextNode(data[i].details.derivative));
+						}
+						else{
+							derivative_a.href = data[i].derivative;
+							derivative_a.appendChild(document.createTextNode(data[i].derivative));
+						}
+						
+						$( "#content" ).append(derivative_a);
+						
+						$( "#content" ).append(document.createElement("br"));
+
+						
+						 var usage_restrictions = data[i].details.usage_restrictions;
+
+						 
+						 if (usage_restrictions.length > 0){
+
+						  	$( "#content" ).append(document.createTextNode("With these usage restrictions:"));
+						
+							var usage_restrictions_list = document.createElement("ul");
+							
+						 	for (var j=0; j< usage_restrictions.length; j++){
+						 		
+								var usage_restrictions_item = document.createElement("li");
+								var usage_restrictions_item_a = document.createElement("a");
+								
+								alert(usage_restrictions[j].url);
+								alert(usage_restrictions[j].label);
+								usage_restrictions_item_a.href = usage_restrictions[j].url;
+								usage_restrictions_item_a.appendChild(document.createTextNode(usage_restrictions[j].label));
+								usage_restrictions_item.appendChild(usage_restrictions_item_a);
+								usage_restrictions_list.appendChild(usage_restrictions_item);
+								
+						 	}
+							$( "#content" ).append(usage_restrictions_list);
+
+						 }
+
+						 	
+					 }
+
 					$( "#content" ).append(document.createElement('hr'));
 
 	  			}
@@ -53,8 +98,6 @@ $(function() {
 	  		}
 
 		});
-
-
 
     });
 
