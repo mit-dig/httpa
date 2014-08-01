@@ -639,7 +639,6 @@ if (typeof CS == "undefined") {
                             "usage_restrictions" : selected_usage_restrictions
 
                         };
-                        alert(JSON.stringify(data));
                         xhr.send(JSON.stringify(data));
                         //xhr.send(data);
 
@@ -669,7 +668,7 @@ if (typeof CS == "undefined") {
                     
                     chrome.storage.sync.get('user', function(data){
                     
-                        var data = {
+                        var data_ptn = {
                             "_id" : derivative,
                             "sources": [document.URL],
                             "derivatives": [],
@@ -681,7 +680,7 @@ if (typeof CS == "undefined") {
                             }
 
                         };
-                        ptn_xhr.send(JSON.stringify(data));
+                        ptn_xhr.send(JSON.stringify(data_ptn));
 
                     });
 
@@ -719,17 +718,25 @@ if (typeof CS == "undefined") {
 
                 function shareOnHTTPASite(server_url){
 
+                    //Check if the user is authenticated with the server first
+
                     var xhr = new XMLHttpRequest();
                     
-                    xhr.open('POST', server_url, true); 
+                    xhr.open('POST', server_url+'/upload', true); 
                     
                     xhr.setRequestHeader('usage_restrictions', JSON.stringify(selected_usage_restrictions));
                     xhr.setRequestHeader('extension', 'true');
 
                     xhr.onreadystatechange = function() {
                         if (this.readyState == 4) {
-                            alert("Your image is at " + xhr.response);
-                            postToPTN(xhr.response)
+                            if (xhr.response == "error"){
+                                alert("You are not authenticated with "+ server_url + ". Please login to the site on another tab before trying again.");
+                            }
+                            else {
+                                alert("Your image is at " + xhr.response);
+                                postToPTN(xhr.response);
+                            }
+                            
                         }
                     };
           
@@ -756,14 +763,14 @@ if (typeof CS == "undefined") {
                 var uploadImagePhotorm = createButtonDiv("Share on photorm.org");
                 
                 uploadImagePhotorm.onclick = function (evt){
-                    shareOnHTTPASite('http://photorm.org/upload');
+                    shareOnHTTPASite('http://photorm.org');
                 };
 
 
                 var uploadImageImagehare = createButtonDiv("Share on imagehare.com");
                 
                 uploadImageImagehare.onclick = function (evt){
-                    shareOnHTTPASite('http://imagehare.com/upload');
+                    shareOnHTTPASite('http://imagehare.com');
                 };
                 
                 if (!modify_clicked){
