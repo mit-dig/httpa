@@ -537,7 +537,7 @@ if (typeof CS == "undefined") {
                         }
                     }
 
-                    alert("Noted your usage restrictions for this modified image.");
+                    alert("Usage restrictions for this modified image saved.");
 
                 };
 
@@ -581,7 +581,7 @@ if (typeof CS == "undefined") {
 
                     //Update the PTN with the information
                     var xhr = new XMLHttpRequest();
-                    xhr.open('PUT', "http://provenance-tracker.herokuapp.com/logs_temp/modify-download/" + encodeURIComponent(document.URL), true); 
+                    xhr.open('PUT', "http://provenance-tracker.herokuapp.com/logs_temp/download/" + encodeURIComponent(document.URL), true); 
                     xhr.setRequestHeader('Content-Type', 'application/json');
                     xhr.onreadystatechange = function() {
                         if (this.readyState == 4) {
@@ -598,6 +598,7 @@ if (typeof CS == "undefined") {
                     chrome.storage.sync.get('user', function(data){
                         
                         var data = {
+                            //sadly no email
                             "user" : data.user.url,
                             "name" : data.user.displayName,
                             "derivation" : document.getElementById('modified_name_input').value,
@@ -626,7 +627,45 @@ if (typeof CS == "undefined") {
                     var xhr = new XMLHttpRequest(); 
                     xhr.open("POST", "https://api.imgur.com/3/image.json"); 
                     xhr.onload = function () {
-                        alert("Your image is at "+JSON.parse(xhr.response).data.link);
+                        var derivative = JSON.parse(xhr.response).data.link;
+                        alert("Your image is at "+ derivative);
+
+                        //Update the provenance tracker with the new update
+                        var ptn_xhr = new XMLHttpRequest();
+                        ptn_xhr.open('POST', "http://provenance-tracker.herokuapp.com/logs_temp/", true); 
+                        ptn_xhr.setRequestHeader('Content-Type', 'application/json');
+                        ptn_xhr.onreadystatechange = function() {
+                            if (this.readyState == 4) {
+                                var response = JSON.parse(xhr.response);
+                      
+                                // Check for error.
+                                if (response.error) {
+                                    alert('Error: ' + response.error.message);
+                                    return;
+                                }
+                            }
+                        };
+                        
+                        chrome.storage.sync.get('user', function(data){
+                        
+                            var data = {
+                                "_id" : derivative,
+                                "sources": [document.URL],
+                                "derivatives": [],
+                                "meta" : {
+                                    //sadly no email
+                                    "user" : data.user.url,
+                                    "name" : data.user.displayName,
+                                    "usage_restrictions" : selected_usage_restrictions
+
+                                }
+
+                            };
+                            ptn_xhr.send(JSON.stringify(data));
+
+                        });
+
+                        
                     }
                     xhr.setRequestHeader('Authorization', 'Client-ID d702179326fa144');
 
