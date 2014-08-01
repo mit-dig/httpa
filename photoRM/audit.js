@@ -76,8 +76,6 @@ $(function() {
 								var usage_restrictions_item = document.createElement("li");
 								var usage_restrictions_item_a = document.createElement("a");
 								
-								alert(usage_restrictions[j].url);
-								alert(usage_restrictions[j].label);
 								usage_restrictions_item_a.href = usage_restrictions[j].url;
 								usage_restrictions_item_a.appendChild(document.createTextNode(usage_restrictions[j].label));
 								usage_restrictions_item.appendChild(usage_restrictions_item_a);

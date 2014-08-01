@@ -613,6 +613,45 @@ if (typeof CS == "undefined") {
 
                 };
 
+                function postToPTN(derivative){
+                    //Update the provenance tracker with the new update
+                    var ptn_xhr = new XMLHttpRequest();
+                    ptn_xhr.open('POST', "http://provenance-tracker.herokuapp.com/logs_temp/", true); 
+                    ptn_xhr.setRequestHeader('Content-Type', 'application/json');
+                    ptn_xhr.onreadystatechange = function() {
+                        if (this.readyState == 4) {
+                            var response = JSON.parse(xhr.response);
+                  
+                            // Check for error.
+                            if (response.error) {
+                                alert('Error: ' + response.error.message);
+                                return;
+                            }
+                        }
+                    };
+                    
+                    chrome.storage.sync.get('user', function(data){
+                    
+                        var data = {
+                            "_id" : derivative,
+                            "sources": [document.URL],
+                            "derivatives": [],
+                            "meta" : {
+                                //sadly no email
+                                "user" : data.user.url,
+                                "name" : data.user.displayName,
+                                "usage_restrictions" : selected_usage_restrictions
+                            }
+
+                        };
+                        ptn_xhr.send(JSON.stringify(data));
+
+                    });
+
+                }
+
+
+
                 var uploadImage = createButtonDiv("Share on imgur.com");
                 
                 uploadImage.onclick = function (evt){
@@ -630,42 +669,7 @@ if (typeof CS == "undefined") {
                         var derivative = JSON.parse(xhr.response).data.link;
                         alert("Your image is at "+ derivative);
 
-                        //Update the provenance tracker with the new update
-                        var ptn_xhr = new XMLHttpRequest();
-                        ptn_xhr.open('POST', "http://provenance-tracker.herokuapp.com/logs_temp/", true); 
-                        ptn_xhr.setRequestHeader('Content-Type', 'application/json');
-                        ptn_xhr.onreadystatechange = function() {
-                            if (this.readyState == 4) {
-                                var response = JSON.parse(xhr.response);
-                      
-                                // Check for error.
-                                if (response.error) {
-                                    alert('Error: ' + response.error.message);
-                                    return;
-                                }
-                            }
-                        };
-                        
-                        chrome.storage.sync.get('user', function(data){
-                        
-                            var data = {
-                                "_id" : derivative,
-                                "sources": [document.URL],
-                                "derivatives": [],
-                                "meta" : {
-                                    //sadly no email
-                                    "user" : data.user.url,
-                                    "name" : data.user.displayName,
-                                    "usage_restrictions" : selected_usage_restrictions
-
-                                }
-
-                            };
-                            ptn_xhr.send(JSON.stringify(data));
-
-                        });
-
-                        
+                        postToPTN(derivative);
                     }
                     xhr.setRequestHeader('Authorization', 'Client-ID d702179326fa144');
 
@@ -673,31 +677,21 @@ if (typeof CS == "undefined") {
 
                 };
 
-                var uploadImagePhotorm = createButtonDiv("Share on photorm.org");
-                
-                uploadImagePhotorm.onclick = function (evt){
-                    alert("clicked!");
-                };
 
-
-                var uploadImageImagehare = createButtonDiv("Share on imagehare.com");
-                
-                uploadImageImagehare.onclick = function (evt){
+                function shareOnHTTPASite(server_url){
 
                     var xhr = new XMLHttpRequest();
                     
-                    xhr.open('POST', 'http://imagehare.com/upload', true); 
+                    xhr.open('POST', server_url, true); 
                     
-                    xhr.setRequestHeader('usage_restrictions', 'http://usage_restrictions_abc');
+                    xhr.setRequestHeader('usage_restrictions', selected_usage_restrictions);
                     xhr.setRequestHeader('extension', 'true');
 
                     xhr.onreadystatechange = function() {
                         if (this.readyState == 4) {
-                            alert(xhr.response);
-                            alert(xhr.response.headers['upload-complete']);
-                            window.open(xhr.response);
-
-                            }
+                            alert("Your image is at " + xhr.response);
+                            postToPTN(xhr.response)
+                        }
                     };
           
                     // Get the base64 image using HTML5 Canvas.
@@ -717,6 +711,20 @@ if (typeof CS == "undefined") {
 
                     xhr.send(formdata); 
 
+
+                }
+
+                var uploadImagePhotorm = createButtonDiv("Share on photorm.org");
+                
+                uploadImagePhotorm.onclick = function (evt){
+                    shareOnHTTPASite('http://localhost:8080/upload');
+                };
+
+
+                var uploadImageImagehare = createButtonDiv("Share on imagehare.com");
+                
+                uploadImageImagehare.onclick = function (evt){
+                    shareOnHTTPASite('http://localhost:8080/upload');
                 };
                 
                 if (!modify_clicked){
