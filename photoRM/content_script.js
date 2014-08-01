@@ -185,7 +185,8 @@ if (typeof CS == "undefined") {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', "http://provenance-tracker.herokuapp.com/logs_temp/" + encodeURIComponent(document.URL), true); 
             xhr.onreadystatechange = function() {
-                if (this.readyState == 4) {
+                if (this.readyState == 4 && xhr.response != "") {
+
                     var response = JSON.parse(xhr.response);
           
                     // Check for error.
@@ -229,6 +230,10 @@ if (typeof CS == "undefined") {
 
                     meta.appendChild(user_div);
                     
+                }
+                else if (this.readyState == 4 && xhr.response != ""){
+                    alert("here");
+                    meta.appendChild(document.createTextNode("This image is from a site that does not implement HTTPA. Please refer back to the original source for appropriate use."));
                 }
             };
             xhr.send();
@@ -743,14 +748,14 @@ if (typeof CS == "undefined") {
                 var uploadImagePhotorm = createButtonDiv("Share on photorm.org");
                 
                 uploadImagePhotorm.onclick = function (evt){
-                    shareOnHTTPASite('http://localhost:8080/upload');
+                    shareOnHTTPASite('http://photorm.org/upload');
                 };
 
 
                 var uploadImageImagehare = createButtonDiv("Share on imagehare.com");
                 
                 uploadImageImagehare.onclick = function (evt){
-                    shareOnHTTPASite('http://localhost:8080/upload');
+                    shareOnHTTPASite('http://imagehare.com/upload');
                 };
                 
                 if (!modify_clicked){

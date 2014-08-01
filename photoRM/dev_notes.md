@@ -1,3 +1,10 @@
+Image Vector Editor
+===================
+This looks pretty awesome!
+http://jsvectoreditor.googlecode.com/svn/trunk/index.html
+(there should be more functionalities like this)
+
+
 Issues with the Image Collector component
 ==========================================
 * Some small images do not get picked up by the background script.

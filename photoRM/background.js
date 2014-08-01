@@ -247,20 +247,32 @@ IC.prototype = {
               url: 'http://provenance-tracker.herokuapp.com/logs_temp/' + encodeURIComponent(message.resource) ,
               // dataType: 'json',
               success: function(data) {
-                // parse you data received from server here
-                //Only request the audit log if it is from the authenticated user
-                if (loggedin_user == data.meta.user){
-
-                    chrome.storage.sync.set({'resource': message.resource}, function() {
-                        // Notify that we saved.
-                        console.log(message.resource + ' saved.');
-                    });
-
-                    chrome.tabs.create({url: "audit.html"});
+                if (data == ""){
+                    alert("Audit record for this image does not exist, as it in on a non-HTTPA aware website.");    
                 }
+                
                 else{
-                    alert("Authentication error! Provenance Tracker says this photo is not yours.");
+
+                    // parse you data received from server here
+                    //Only request the audit log if it is from the authenticated user
+                    if (loggedin_user == data.meta.user){
+
+                        chrome.storage.sync.set({'resource': message.resource}, function() {
+                            // Notify that we saved.
+                            console.log(message.resource + ' saved.');
+                        });
+
+                        chrome.tabs.create({url: "audit.html"});
+                    }
+                    else{
+                        alert("Authentication error! Provenance Tracker says this photo is not yours.");
+                    }
+                        
                 }
+              },
+
+              error: function(e){
+                alert(e);
               }
             });
 
