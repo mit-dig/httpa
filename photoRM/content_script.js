@@ -492,7 +492,7 @@ if (typeof CS == "undefined") {
                 //create Usage Restriction Options
                 var selectDiv = document.createElement("div");
                 var selectP = document.createElement("p");
-                selectP.appendChild(document.createTextNode("Select Usage Restriction(s) for your Meme:"));
+                selectP.appendChild(document.createTextNode("Select License(s) or Usage Restriction(s) for your Meme:"));
 
                 selectDiv.appendChild(selectP);
 
@@ -501,20 +501,37 @@ if (typeof CS == "undefined") {
                 selectOptions.id = "select_options";
 
                 var usage_restrictions = [
-                    {   "label" : "No modification" ,       
-                        "url": "http://no-modifications" },
-                    {   "label" : "No sharing" ,            
-                        "url": "http://no-sharing" },
-                    {   "label" : "No commercial uses" ,    
-                        "url": "http://no-commercial-uses" },
-                    {   "label" : "No text additions" ,     
-                        "url": "http://no-text-additions" },
-                    {   "label" : "No downloading" ,        
-                        "url": "http://no-downloading" }
+                    {   "label" : "Attribution" ,       
+                        "url": "http://creativecommons.org/licenses/by/4.0" },
+                    {   "label" : "Attribution-ShareAlike" ,            
+                        "url": "https://creativecommons.org/licenses/by-sa/4.0" },
+                    {   "label" : "Attribution-NoDerivs" ,    
+                        "url": "https://creativecommons.org/licenses/by-nd/4.0" },
+                    {   "label" : "Attribution-NonCommercial" ,     
+                        "url": "https://creativecommons.org/licenses/by-nc/4.0" },
+                    {   "label" : "Attribution-NonCommercial-ShareAlike" ,        
+                        "url": "https://creativecommons.org/licenses/by-nc-sa/4.0" },
+                    {   "label" : "Attribution-NonCommercial-NoDerivs",
+                        "url"   : "https://creativecommons.org/licenses/by-nc-nd/4.0" }
+
                 ];
 
+                // var usage_restrictions = [
+                //     {   "label" : "No modification" ,       
+                //         "url": "http://no-modifications" },
+                //     {   "label" : "No sharing" ,            
+                //         "url": "http://no-sharing" },
+                //     {   "label" : "No commercial uses" ,    
+                //         "url": "http://no-commercial-uses" },
+                //     {   "label" : "No text additions" ,     
+                //         "url": "http://no-text-additions" },
+                //     {   "label" : "No downloading" ,        
+                //         "url": "http://no-downloading" }
+                // ];
                 
-                selectOptions.size = usage_restrictions.length; 
+                
+
+                //selectOptions.size = usage_restrictions.length; 
                 
                 for (var i=0; i< usage_restrictions.length; i++){
                     var optionVal = document.createElement("option");
