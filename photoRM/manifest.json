@@ -47,11 +47,6 @@
    "oauth2": {
     "client_id": "143236281988-jbg6h3kiu93kvrj20a6g1pt2slsu129s.apps.googleusercontent.com",
     "scopes": [
-      // "https://www.googleapis.com/auth/drive",
-      // "https://www.googleapis.com/auth/profile",
-      // "https://www.googleapis.com/auth/email",
-      // "https://www.googleapis.com/auth/people.get",
-      // "http://www-opensocial.googleusercontent.com/api/people/",
       "https://www.googleapis.com/auth/plus.login"
     ]
   }

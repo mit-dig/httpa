@@ -608,6 +608,7 @@ if (typeof CS == "undefined") {
 
                     var link = document.createElement('a');
                     link.download = document.getElementById('modified_name_input').value;
+                    alert(link.download);
                     link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");;
                     link.click();
 
